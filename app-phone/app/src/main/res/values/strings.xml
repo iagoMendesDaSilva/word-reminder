@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">Reminder</string>
+    <string name="ERROR_DEFAULT">Something went wrong</string>
+    <string name="ERROR_WATCH">Unable to provide authentication for the watch</string>
+    <string name="ERROR_EMPTY">All fields are mandatory</string>
+    <string name="ERROR_LOGIN">Incorrect email or password</string>
+    <string name="ERROR_WRONG_CODE">Code incorrect or expired</string>
+    <string name="ERROR_INVALID_EMAIL">Email already registered</string>
+    <string name="ERROR_ONESIGNAL">Notifications may be disabled</string>
+    <string name="ERROR_USER_REGISTERED">User already registered</string>
+    <string name="ERROR_PASSWORD_DIFFERENT">The Passwords must equal</string>
+    <string name="ERROR_NOT_REGISTERED_EMAIL">Email not registered</string>
+    <string name="ERROR_PASSWORD_WEAK">Password must be at least medium</string>
+    <string name="EMOJI_SAD">\uD83D\uDE41</string>
+    <string name="EMPTY_TOKEN">EMPTY_TOKEN</string>
+    <string name="BTN_NEXT">NEXT</string>
+    <string name="BTN_LOGIN">LOGIN</string>
+    <string name="LBL_PASS_WEAK">Weak</string>
+    <string name="LBL_PASS_MEDIUM">Medium</string>
+    <string name="LBL_PASS_STRONG">Strong</string>
+    <string name="LBL_PASS_EMPTY">No password</string>
+    <string name="LBL_WORD">Word</string>
+    <string name="LBL_TITLE">My Words</string>
+    <string name="LBL_ADD_WORD">Add word</string>
+    <string name="LBL_NEW_WORD">New word</string>
+    <string name="LBL_EDIT_WORD">Edit word</string>
+    <string name="LBL_TRANSLATE">Translate</string>
+    <string name="LBL_FORGOT_PASSWORD">Forgot password?</string>
+    <string name="LBL_EMPTY_LIST">You don\'t have any words.</string>
+    <string name="LBL_SIGN_UP">Don\'t have an account? Sign up.</string>
+    <string name="DESCRIPTION_ICON_BACK">Back icon</string>
+    <string name="DESCRIPTION_ICON_ADD">Add icon</string>
+    <string name="DESCRIPTION_IMG_LOGO">Logo app</string>
+    <string name="DESCRIPTION_ICON_USER">User icon</string>
+    <string name="DESCRIPTION_ICON_AUDIO">Audio icon</string>
+    <string name="DESCRIPTION_ICON_CLOSE">Close icon</string>
+    <string name="DESCRIPTION_ICON_DELETE">Delete icon</string>
+    <string name="DESCRIPTION_ICON_PASS">Password icon</string>
+    <string name="DESCRIPTION_ICON_LOGOUT">Logout app icon</string>
+    <string name="DESCRIPTION_ICON_WATCH">Watch icon</string>
+    <string name="REGEX_MEDIUM_PASSWORD">^(?=.*[a-zA-Z])(?=.*[0-9])(?=.{6,})</string>
+    <string name="REGEX_STRONG_PASSWORD">^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{6,})</string>
+    <string name="WARNING_EMAIL_SENT">Thank you for signing up\nPlease confirm your subscription your email address.</string>
+    <string name="SUCCESS_WATCH">authentication sent to watch</string>
+</resources>

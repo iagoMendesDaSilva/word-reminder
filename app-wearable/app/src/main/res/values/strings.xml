@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Reminder Wear OS</string>
+    <string name="ERROR_DEFAULT">Something went wrong</string>
+    <string name="lbl_auth">Unlock on app</string>
+    <string name="desc_reload_icon">Refresh icon</string>
+    <string name="desc_schedule_icon">Schedule icon</string>
+</resources>

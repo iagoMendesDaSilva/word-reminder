@@ -1,0 +1,122 @@
+/*
+ * Copyright 2021 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+}
+
+android {
+    compileSdk 31
+
+    defaultConfig {
+        applicationId "com.iago.reminder"
+        minSdk 26
+        targetSdk 30
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            signingConfig signingConfigs.debug
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
+        useIR = true
+    }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion libs.versions.compose.get()
+    }
+    packagingOptions {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
+}
+
+dependencies {
+    // General compose dependencies
+    implementation libs.androidx.activity.compose
+    implementation libs.compose.ui.tooling.preview
+
+    // Compose for Wear OS Dependencies
+    // NOTE: DO NOT INCLUDE a dependency on androidx.compose.material:material.
+    // androidx.wear.compose:compose-material is designed as a replacement not an addition to
+    // androidx.compose.material:material. If there are features from that you feel are missing from
+    // androidx.wear.compose:compose-material please raise a bug to let us know:
+    // https://issuetracker.google.com/issues/new?component=1077552&template=1598429&pli=1
+    implementation libs.wear.compose.material
+
+    // Foundation is additive, so you can use the mobile version in your Wear OS app.
+    implementation libs.wear.compose.foundation
+    implementation 'androidx.compose.material:material-icons-core:1.1.1'
+    implementation "androidx.compose.material:material-icons-extended:1.1.1"
+
+    // Testing
+    testImplementation libs.junit
+    androidTestImplementation libs.test.ext.junit
+    androidTestImplementation libs.test.espresso.core
+    androidTestImplementation libs.compose.ui.test.junit4
+    debugImplementation libs.compose.ui.tooling
+
+    // Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+
+    // OkHttp
+    implementation("com.squareup.okhttp3:okhttp:5.0.0-alpha.2")
+
+    // JSON Converter
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+
+    // Coroutine Lifecycle Scopes
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1"
+
+    //lifecycle
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.4.1")
+
+    // Coroutines
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1'
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.1"
+
+    // Dagger - Hilt
+    implementation 'com.google.dagger:hilt-android:2.39'
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03"
+    kapt "androidx.hilt:hilt-compiler:1.0.0"
+    kapt "com.google.dagger:hilt-android-compiler:2.39"
+    implementation "androidx.hilt:hilt-navigation-compose:1.0.0"
+
+    //Navigation
+    implementation "androidx.wear.compose:compose-navigation:1.0.0-alpha21"
+
+    //Wearable
+    implementation 'com.google.android.gms:play-services-wearable:17.1.0'
+
+}
