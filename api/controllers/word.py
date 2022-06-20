@@ -15,7 +15,7 @@ class WordController:
             user = dao.get_by_id(id_user, User)
             if user:
                 word = Word(
-                active=True,
+                active=data['active'],
                 word=data['word'],
                 word_translate=data['word_translate'],
                 time=data['time'],
@@ -88,6 +88,7 @@ class WordController:
         for word in words:
             if word.active==True:
                 user = dao.get_by_id(word.id_user,User)
-                notification.send([user.onesignal_playerID],word.word,word.word_translate, word.time)
+                if user.token is not None and user.onesignal_playerID is not None:
+                    notification.send([user.onesignal_playerID],word.word,word.word_translate, word.time)
 
 wordController = WordController()

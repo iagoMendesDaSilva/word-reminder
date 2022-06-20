@@ -9,23 +9,22 @@ import androidx.compose.material.icons.rounded.Refresh
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.wear.compose.material.Icon
+import androidx.wear.compose.material.MaterialTheme
 import com.iago.reminder.R
-import com.iago.reminder.ContextProvider
-import com.iago.reminder.theme.Primary
 
 @Composable
 fun Refresh(refresh: () -> Unit) {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Icon(
-            tint = Primary,
+            tint = MaterialTheme.colors.primary,
             modifier = Modifier
                 .size(50.dp)
                 .clickable { refresh() },
             imageVector = Icons.Rounded.Refresh,
-            contentDescription = LocalContext.current.getString(R.string.desc_reload_icon),
+            contentDescription = stringResource(R.string.icon_reload),
         )
     }
 }

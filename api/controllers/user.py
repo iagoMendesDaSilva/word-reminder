@@ -33,7 +33,7 @@ class UserController:
 
     def logout(self, id):
         try:
-            update_data ={"token": None}
+            update_data ={"token": None, "onesignal_playerID": None}
             dao.update_many(id,update_data,User)
         except Exception as err:
             abort(make_response(jsonify({"response":"Internal problem."}), 500))
@@ -46,6 +46,16 @@ class UserController:
             abort(make_response(jsonify({"response":"User not found."}), 404))
         except Exception as err:
             abort(make_response(jsonify({"response":"Internal problem."}), 500)) 
+
+    def unregister(self, id):
+        try:
+            user = dao.get_by_id(id, User)
+            dao.remove(user)
+        except ObjectInvalid as err:
+            abort(make_response(jsonify({"response":"User not found."}), 404))
+        except Exception as err:
+            abort(make_response(jsonify({"response":"Internal problem."}), 500)) 
+
 
     def register(self, data):
         try:
@@ -80,7 +90,7 @@ class UserController:
     def send_email_verify_acccount(self, email):
         try:
             token = urlSafe.dumps(email, salt='email-confirm')
-            msg = Message('Reminder app confirm email', sender = "YOUR EMAIL", recipients = [email])
+            msg = Message('Reminder app confirm email', sender = os.getenv("REMINDER_EMAIL"), recipients = [email])
             link = url_for('verify_account', token=token, _external=True)
             msg.body = 'Your link is {}'.format(link)
             mail.send(msg)
@@ -89,10 +99,10 @@ class UserController:
 
     def send_email_recovery_password(self, email, code):
         try:
-            msg = Message('Reminder recovery password', sender = "YOUR EMAIL", recipients = [email])
+            msg = Message('Reminder recovery password', sender = os.getenv("REMINDER_EMAIL"), recipients = [email])
             msg.body = 'Your code is {}'.format(code)
             mail.send(msg)
-        except:
+        except Exception as err:
             raise MailException 
 
     def verify_email(self, data):

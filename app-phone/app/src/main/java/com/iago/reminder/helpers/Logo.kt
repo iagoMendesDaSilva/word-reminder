@@ -17,10 +17,8 @@ fun Logo() {
     Image(
         contentScale = ContentScale.Fit,
         modifier = Modifier
-            .padding(25.dp)
-            .fillMaxWidth(.9f)
-            .height(50.dp),
-        contentDescription = stringResource(R.string.DESCRIPTION_IMG_LOGO),
-        painter = rememberAsyncImagePainter(R.drawable.logo)
+            .fillMaxWidth(.7f),
+        painter = rememberAsyncImagePainter(R.drawable.logo),
+        contentDescription = stringResource(R.string.logo_desc),
     )
 }

@@ -3,26 +3,26 @@ package com.iago.reminder.navigation
 import java.lang.IllegalArgumentException
 
 enum class Screens {
+    GetStartedScreen,
+    HomeScreen,
     LoginScreen,
-    SplashScreen,
-    RegisterScreen,
     PasswordScreen,
-    WarningScreen,
-    RecoveryScreen,
-    ForgotPasswordScreen,
-    HomeScreen;
+    SplashScreen,
+    VerificationCodeScreen,
+    WelcomeScreen,
+    WordFormScreen;
 
     companion object {
         fun fromRoute(route: String?): Screens = when(route?.substringBefore("/")){
             HomeScreen.name -> HomeScreen
             LoginScreen.name -> LoginScreen
-            WarningScreen.name->WarningScreen
-            RegisterScreen.name -> RegisterScreen
-            PasswordScreen.name->PasswordScreen
-            RecoveryScreen.name->RecoveryScreen
+            WelcomeScreen.name->WelcomeScreen
             SplashScreen.name -> SplashScreen
-            ForgotPasswordScreen.name -> ForgotPasswordScreen
-            null -> LoginScreen
+            PasswordScreen.name->PasswordScreen
+            WordFormScreen.name -> WordFormScreen
+            GetStartedScreen.name->GetStartedScreen
+            VerificationCodeScreen.name -> VerificationCodeScreen
+            null -> WelcomeScreen
             else -> throw  IllegalArgumentException("Route $route is not recognized")
         }
     }

@@ -13,6 +13,9 @@ interface ReminderApi {
     @GET("auth/logout")
     suspend fun logout(@Header("Authorization") token: String): SimpleResponseModel
 
+    @POST("auth/unregister")
+    suspend fun unregister(@Header("Authorization") token: String): SimpleResponseModel
+
     @POST("auth/verify-email")
     suspend fun verifyEmail(@Body body: EmailModel): IdModel
 
@@ -26,7 +29,7 @@ interface ReminderApi {
     suspend fun confirmCode(@Path("id") id: Int, @Body code: CodeModel): TokenModel
 
     @POST("/auth/recovery")
-    suspend fun recovery( @Header("Authorization") token: String, @Body passwordModel: PasswordModel): UserModel
+    suspend fun recovery(@Header("Authorization") token: String, @Body passwordModel: PasswordModel): UserModel
 
     @POST("word")
     suspend fun saveWord(@Body body: WordModel, @Header("Authorization") token: String): WordModel

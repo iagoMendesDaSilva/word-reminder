@@ -24,6 +24,12 @@ def register():
     userController.register(request.get_json())
     return jsonify({"response":"Email Sent"}), 200
 
+@app.route("/auth/unregister", methods=["POST"])
+@token
+def unregister(current_user):
+    userController.unregister(current_user.id)
+    return jsonify({"response":"Account deleted"}), 200
+
 @app.route("/confirm_email/<token>", methods=["GET"])
 def verify_account(token):
     return userController.create_account(token)

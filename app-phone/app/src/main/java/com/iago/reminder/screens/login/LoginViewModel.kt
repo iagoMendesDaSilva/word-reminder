@@ -3,12 +3,10 @@ package com.iago.reminder.screens.login
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavHostController
 import com.iago.reminder.database.ReminderDao
-import com.iago.reminder.models.Resource
 import com.iago.reminder.models.UserModel
-import com.iago.reminder.navigation.Screens
 import com.iago.reminder.repository.UserRepository
+import com.iago.reminder.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -20,32 +18,31 @@ class LoginViewModel @Inject constructor(
 ) : ViewModel() {
 
     var loading = mutableStateOf(false)
-    var error = mutableStateOf<String?>("")
+    var error = mutableStateOf<Int?>(null)
 
-    private fun startValuesToRequest() {
-        loading.value = true
-        error.value = ""
-    }
-
-    fun login(email: String, password: String, navController: NavHostController) {
+    fun login(email: String, password: String, callback: () -> Unit) {
         viewModelScope.launch {
-            startValuesToRequest()
+            loading.value = true
+            error.value = null
+
             when (val response = repository.login(email, password)) {
                 is Resource.Success -> {
                     response.data!!.password = password
                     saveOrEditUser(response.data)
-                    navController.navigate(Screens.HomeScreen.name)
+                    callback()
                 }
-                is Resource.Error -> error.value = response.message
+                else -> error.value = response.message
             }
+
             loading.value = false
         }
     }
 
-    private fun saveOrEditUser(user: UserModel) = viewModelScope.launch {
+    private suspend fun saveOrEditUser(user: UserModel) {
         if (reminderDao.existUser())
             reminderDao.editUser(user)
         else
             reminderDao.addUser(user)
     }
+
 }

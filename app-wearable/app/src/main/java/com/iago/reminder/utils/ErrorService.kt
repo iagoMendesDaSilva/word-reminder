@@ -1,16 +1,16 @@
 package com.iago.reminder.utils
 
 import com.iago.reminder.R
-import com.iago.reminder.ContextProvider
 
 interface ErrorService {
 
-    fun getErrorMessage(statusCode: Int, messageFail: String): String {
+    fun getErrorMessage(statusCode: Int, messageFail: Int): Int {
 
         return when (statusCode) {
             404 -> messageFail
-            500 -> ContextProvider.getContext().getString(R.string.ERROR_DEFAULT)
-            else -> ContextProvider.getContext().getString(R.string.ERROR_DEFAULT)
+            401 -> R.string.error_session
+            500 -> R.string.error_default
+            else -> R.string.error_default
         }
     }
 }

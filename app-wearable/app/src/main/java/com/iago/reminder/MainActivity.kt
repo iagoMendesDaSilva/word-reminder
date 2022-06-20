@@ -24,6 +24,7 @@ import androidx.wear.compose.material.Text
 import com.google.android.gms.wearable.CapabilityClient
 import com.google.android.gms.wearable.Wearable
 import com.iago.reminder.nav.Navigation
+import com.iago.reminder.theme.WearAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -51,7 +52,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            Navigation(token = clientDataViewModel.token)
+            WearAppTheme {
+                Navigation(token = clientDataViewModel.token)
+            }
         }
     }
 

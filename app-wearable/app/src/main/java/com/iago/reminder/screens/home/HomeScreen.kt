@@ -6,13 +6,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.wear.compose.material.*
 import com.iago.reminder.screens.home.commons.ItemExpanded
 import com.iago.reminder.screens.home.commons.ListWords
 import com.iago.reminder.screens.home.commons.Load
 import com.iago.reminder.screens.home.commons.Refresh
-import com.iago.reminder.theme.BackGround
 
 @Composable
 fun HomeScreen(token: String) {
@@ -28,17 +28,18 @@ fun HomeScreen(token: String) {
         homeViewModel.getAllWords(token)
     })
 
-    LaunchedEffect(key1 = homeViewModel.error.value, block = {
-        if (!homeViewModel.error.value.isNullOrEmpty())
-            Toast.makeText(context, homeViewModel.error.value, Toast.LENGTH_SHORT)
-                .show()
-    })
-
+    if (homeViewModel.error.value != null)
+        Toast.makeText(
+            context,
+            stringResource(id = homeViewModel.error.value!!),
+            Toast.LENGTH_SHORT
+        )
+            .show()
 
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = BackGround),
+            .background(color = MaterialTheme.colors.background),
         timeText = {
             if (!listState.isScrollInProgress)
                 TimeText()
@@ -46,12 +47,12 @@ fun HomeScreen(token: String) {
         vignette = { VignettePosition.TopAndBottom },
         positionIndicator = { PositionIndicator(scalingLazyListState = listState) }
     ) {
-        if (homeViewModel.error.value.isNullOrEmpty())
+        if (homeViewModel.error.value == null)
             ListWords(listState, words) { indexItem.value = it }
         else
             Refresh() { homeViewModel.getAllWords(token) }
 
-        if(homeViewModel.loading.value)
+        if (homeViewModel.loading.value)
             Load()
 
         if (indexItem.value != null)
