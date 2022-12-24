@@ -9,17 +9,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.iago.reminder.helpers.SwitchDefault
-import com.iago.reminder.models.WordModel
+import com.iago.reminder.models.Word
 import com.iago.reminder.screens.home.HomeScreenViewModel
 import com.iago.reminder.ui.theme.White
 
 @Composable
 fun TimeAndSwitchColumn(
-    word: WordModel,
+    word: Word,
     viewModel: HomeScreenViewModel,
     active: MutableState<Boolean>,
-    cancelAlarm: (word: WordModel) -> Unit,
-    createAlarm: (word: WordModel) -> Unit,
+    cancelAlarm: (word: Word) -> Unit,
+    createAlarm: (word: Word) -> Unit,
 ) {
 
     LaunchedEffect(key1 = active.value) {

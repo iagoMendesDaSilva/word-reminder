@@ -11,6 +11,7 @@ buildscript {
         gson_version='2.9.0'
         okHttp_version='5.0.0-alpha.2'
         swipeToReveal_version='1.0.0'
+        swiperefresh='0.28.0'
     }
     dependencies {
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"

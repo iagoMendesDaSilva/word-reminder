@@ -1,4 +1,4 @@
-package com.iago.reminder.screens.wordForm.commons
+package com.iago.reminder.screens.form.commons
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column

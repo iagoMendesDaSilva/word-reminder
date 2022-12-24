@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 
 @Entity(tableName = "words")
 @Parcelize
-data class WordModel(
+data class Word(
     @PrimaryKey(autoGenerate = true)
     var id: Int,
     var time: String,

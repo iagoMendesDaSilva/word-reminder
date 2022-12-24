@@ -1,16 +1,16 @@
-package com.iago.reminder.screens.wordForm
+package com.iago.reminder.screens.form
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.iago.reminder.database.ReminderDao
-import com.iago.reminder.models.WordModel
+import com.iago.reminder.models.Word
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class WordFormScreenViewModel @Inject constructor(
+class FormScreenViewModel @Inject constructor(
     private val reminderDao: ReminderDao
 ) : ViewModel() {
 
@@ -27,7 +27,7 @@ class WordFormScreenViewModel @Inject constructor(
         wordTranslate: String,
         time: String,
         active: Boolean,
-        createAlarm: (word: WordModel) -> Unit,
+        createAlarm: (word: Word) -> Unit,
         callback: () -> Unit
     ) {
         viewModelScope.launch {
@@ -36,7 +36,7 @@ class WordFormScreenViewModel @Inject constructor(
             var list = reminderDao.getWords()
             var nextID = if(list.isEmpty()) 1 else list[list.lastIndex].id + 1
 
-            var wordItem = WordModel(nextID, time, word, wordTranslate, active)
+            var wordItem = Word(nextID, time, word, wordTranslate, active)
             reminderDao.addWord(wordItem)
 
             if (active)
@@ -53,13 +53,13 @@ class WordFormScreenViewModel @Inject constructor(
         wordTranslate: String,
         time: String,
         active: Boolean,
-        createAlarm: (word: WordModel) -> Unit,
-        cancelAlarm: (word: WordModel) -> Unit,
+        createAlarm: (word: Word) -> Unit,
+        cancelAlarm: (word: Word) -> Unit,
         callback: () -> Unit
     ) {
         viewModelScope.launch {
             startAction()
-            var wordItem = WordModel(id, time, word, wordTranslate, active)
+            var wordItem = Word(id, time, word, wordTranslate, active)
             reminderDao.editWord(wordItem)
 
             cancelAlarm(wordItem)

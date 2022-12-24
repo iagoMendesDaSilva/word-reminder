@@ -25,7 +25,7 @@ fun ButtonAdd(navController: NavHostController) {
             backgroundColor = MaterialTheme.colors.primary,
             onClick = {
                 navController.currentBackStackEntry?.arguments?.putParcelable("word", null)
-                navController.navigate(Screens.WordFormScreen.name)
+                navController.navigate(Screens.FormScreen.name)
             }) {
             Icon(
                 tint = White,

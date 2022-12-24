@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.iago.reminder.R
-import com.iago.reminder.models.WordModel
+import com.iago.reminder.models.Word
 import com.iago.reminder.navigation.Screens
 import com.iago.reminder.screens.home.HomeScreenViewModel
 import com.iago.reminder.utils.GlobalDialogState
@@ -21,12 +21,12 @@ import de.charlex.compose.RevealSwipe
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ListWords(
-    data: List<WordModel>,
+    data: List<Word>,
     navController: NavHostController,
     openGlobalDialog: (dialog: GlobalDialogState) -> Unit,
     viewModel: HomeScreenViewModel,
-    createAlarm: (word: WordModel) -> Unit,
-    cancelAlarm: (word: WordModel) -> Unit
+    createAlarm: (word: Word) -> Unit,
+    cancelAlarm: (word: Word) -> Unit
 ) {
     if (data.isEmpty())
         EmptyList()
@@ -49,7 +49,7 @@ fun ListWords(
                     },
                     onBackgroundStartClick = {
                         navController.currentBackStackEntry?.arguments?.putParcelable("word", item)
-                        navController.navigate(Screens.WordFormScreen.name)
+                        navController.navigate(Screens.FormScreen.name)
                     },
                     hiddenContentEnd = { WordItemSwipedEnd(item.id) },
                     hiddenContentStart = { WordItemSwipedStart(item.id) },

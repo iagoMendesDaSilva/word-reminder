@@ -1,4 +1,4 @@
-package com.iago.reminder.screens.wordForm.commons
+package com.iago.reminder.screens.form.commons
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row

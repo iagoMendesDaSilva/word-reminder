@@ -24,8 +24,8 @@ android {
         Properties properties = new Properties()
         properties.load(project.rootProject.file("local.properties").newDataInputStream())
 
-        buildConfigField "String", "API_BASE_URL", "\"${properties.getProperty("API_BASE_URL")}\""
-        buildConfigField "String", "ONESIGNAL_APP_ID", "\"${properties.getProperty("ONESIGNAL_APP_ID")}\""
+        buildConfigField "String", "API_WORD_BASE_URL", "\"${properties.getProperty("API_WORD_BASE_URL")}\""
+        buildConfigField "String", "API_DICT_BASE_URL", "\"${properties.getProperty("API_DICT_BASE_URL")}\""
     }
 
     buildTypes {
@@ -113,4 +113,7 @@ dependencies {
 
     //SwipeTOReveal
     implementation "de.charlex.compose:revealswipe:$swipeToReveal_version"
+
+    //SwipeTORefresh
+//    implementation "com.google.accompanist:accompanist-swiperefresh:$swiperefresh"
 }

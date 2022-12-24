@@ -1,4 +1,4 @@
-package com.iago.reminder.screens.wordForm.commons
+package com.iago.reminder.screens.form.commons
 
 import android.app.TimePickerDialog
 import androidx.compose.foundation.clickable

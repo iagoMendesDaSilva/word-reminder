@@ -1,38 +1,52 @@
 package com.iago.reminder.navigation
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.Dp
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import com.iago.reminder.models.WordModel
+import com.iago.reminder.models.Word
 import com.iago.reminder.screens.home.HomeScreen
 import com.iago.reminder.screens.splash.SplashScreen
-import com.iago.reminder.screens.wordForm.WordFormScreen
+import com.iago.reminder.screens.vocabulary.VocabularyScreen
+import com.iago.reminder.screens.form.FormScreen
 import com.iago.reminder.utils.GlobalDialogState
 
 
 @Composable
 fun Navigation(
-    createAlarm:(word:WordModel)->Unit,
-    cancelAlarm:(word:WordModel)->Unit,
+    paddingBottom: Dp,
+    navController: NavHostController,
+    createAlarm: (word: Word) -> Unit,
+    cancelAlarm: (word: Word) -> Unit,
     openGlobalDialog: (dialog: GlobalDialogState) -> Unit
 ) {
-    val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = Screens.SplashScreen.name) {
-
-        composable(Screens.HomeScreen.name) {
-            HomeScreen(navController, createAlarm, cancelAlarm, openGlobalDialog)
-        }
+    NavHost(
+        modifier = Modifier.padding(bottom = paddingBottom),
+        navController = navController,
+        startDestination = Screens.SplashScreen.name
+    ) {
 
         composable(Screens.SplashScreen.name) {
             SplashScreen(navController, openGlobalDialog)
         }
 
+        composable(Screens.HomeScreen.name) {
+            HomeScreen(navController, createAlarm, cancelAlarm, openGlobalDialog)
+        }
+
+        composable(Screens.VocabularyScreen.name) {
+            VocabularyScreen(navController, openGlobalDialog)
+        }
+
         composable(
-            Screens.WordFormScreen.name + "?word={word}"
+            Screens.FormScreen.name + "?word={word}"
         ) {
-            val word = navController.previousBackStackEntry?.arguments?.getParcelable<WordModel>("word")
-            WordFormScreen(
+            val word =
+                navController.previousBackStackEntry?.arguments?.getParcelable<Word>("word")
+            FormScreen(
                 navController,
                 word,
                 createAlarm,

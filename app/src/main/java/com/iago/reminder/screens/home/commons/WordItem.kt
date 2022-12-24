@@ -13,15 +13,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.iago.reminder.models.WordModel
+import com.iago.reminder.models.Word
 import com.iago.reminder.screens.home.HomeScreenViewModel
 
 @Composable
 fun WordItem(
-    word: WordModel,
+    word: Word,
     viewModel: HomeScreenViewModel,
-    createAlarm: (word: WordModel) -> Unit,
-    cancelAlarm: (word: WordModel) -> Unit,
+    createAlarm: (word: Word) -> Unit,
+    cancelAlarm: (word: Word) -> Unit,
 ) {
 
     val openDialog = remember { mutableStateOf(false) }

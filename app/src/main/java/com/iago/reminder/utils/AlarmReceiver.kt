@@ -9,6 +9,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.iago.reminder.MainActivity
 import com.iago.reminder.R
+import com.iago.reminder.utils.Constants.CHANNEL_ID
 
 class AlarmReceiver : BroadcastReceiver() {
 
@@ -23,10 +24,10 @@ class AlarmReceiver : BroadcastReceiver() {
             context,
             System.currentTimeMillis().toInt(),
             intent,
-           PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
         val builder: NotificationCompat.Builder =
-            NotificationCompat.Builder(context, "REMINDER_ID")
+            NotificationCompat.Builder(context, CHANNEL_ID)
                 .setContentIntent(pendingIntent)
                 .setSmallIcon(R.drawable.ic_launcher_round)
                 .setContentTitle("Reminder")

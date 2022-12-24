@@ -1,4 +1,4 @@
-package com.iago.reminder.screens.wordForm
+package com.iago.reminder.screens.form
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -19,19 +19,19 @@ import androidx.navigation.NavHostController
 import com.iago.reminder.R
 import com.iago.reminder.helpers.ButtonDefault
 import com.iago.reminder.helpers.InputDefault
-import com.iago.reminder.models.WordModel
-import com.iago.reminder.screens.wordForm.commons.TimeAndActiveContainer
+import com.iago.reminder.models.Word
+import com.iago.reminder.screens.form.commons.TimeAndActiveContainer
 import com.iago.reminder.ui.theme.White
 import com.iago.reminder.utils.GlobalDialogState
 import java.text.SimpleDateFormat
 import java.util.*
 
 @Composable
-fun WordFormScreen(
+fun FormScreen(
     navController: NavHostController,
-    wordToEdit: WordModel?,
-    createAlarm: (word: WordModel) -> Unit,
-    cancelAlarm: (word: WordModel) -> Unit,
+    wordToEdit: Word?,
+    createAlarm: (word: Word) -> Unit,
+    cancelAlarm: (word: Word) -> Unit,
     openGlobalDialog: (dialog: GlobalDialogState) -> Unit
 ) {
 
@@ -41,7 +41,7 @@ fun WordFormScreen(
     var reminde = remember { mutableStateOf(wordToEdit?.active ?: true) }
     var translate = remember { mutableStateOf(wordToEdit?.word_translate ?: "") }
 
-    val viewModel = hiltViewModel<WordFormScreenViewModel>()
+    val viewModel = hiltViewModel<FormScreenViewModel>()
 
     if (viewModel.error.value != null)
         openGlobalDialog(GlobalDialogState(viewModel.error.value!!) {
@@ -145,11 +145,11 @@ fun onPressButton(
     translate: MutableState<String>,
     reminde: MutableState<Boolean>,
     time: String,
-    viewModel: WordFormScreenViewModel,
+    viewModel: FormScreenViewModel,
     openGlobalDialog: (dialog: GlobalDialogState) -> Unit,
     navController: NavHostController,
-    createAlarm: (word: WordModel) -> Unit,
-    cancelAlarm: (word: WordModel) -> Unit
+    createAlarm: (word: Word) -> Unit,
+    cancelAlarm: (word: Word) -> Unit
 ) {
     if (word.value.isEmpty() || translate.value.isEmpty()) {
         viewModel.error.value = R.string.error_empty_word

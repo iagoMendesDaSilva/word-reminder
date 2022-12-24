@@ -4,7 +4,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.iago.reminder.database.ReminderDao
-import com.iago.reminder.models.WordModel
+import com.iago.reminder.models.Word
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -20,7 +20,7 @@ class HomeScreenViewModel @Inject constructor(
     var loadingDelete = mutableStateOf(false)
     var error = mutableStateOf<Int?>(null)
 
-    private val _words = MutableStateFlow<List<WordModel>>(emptyList())
+    private val _words = MutableStateFlow<List<Word>>(emptyList())
     val words = _words.asStateFlow()
 
     fun getWords() {
@@ -32,7 +32,7 @@ class HomeScreenViewModel @Inject constructor(
         }
     }
 
-    fun deleteWord(item: WordModel, cancelAlarm: (word: WordModel) -> Unit) {
+    fun deleteWord(item: Word, cancelAlarm: (word: Word) -> Unit) {
         viewModelScope.launch {
             loadingDelete.value = true
             error.value = null
@@ -50,24 +50,28 @@ class HomeScreenViewModel @Inject constructor(
     }
 
     fun editActiveWord(
-        word: WordModel,
-        createAlarm: (word: WordModel) -> Unit,
-        cancelAlarm: (word: WordModel) -> Unit,
+        word: Word,
+        createAlarm: (word: Word) -> Unit,
+        cancelAlarm: (word: Word) -> Unit,
         onError: () -> Unit
     ) {
         viewModelScope.launch {
-            var wordItem =
-                WordModel(word.id, word.time, word.word, word.word_translate, !word.active)
-            reminderDao.editWord(wordItem)
+            try {
+                var wordItem =
+                    Word(word.id, word.time, word.word, word.word_translate, !word.active)
+                reminderDao.editWord(wordItem)
 
-            if (word.active)
-                cancelAlarm(word)
-            else
-                createAlarm(word)
+                if (word.active)
+                    cancelAlarm(word)
+                else
+                    createAlarm(word)
 
-            val newList = _words.value.toMutableList()
-            newList.find { it.id == word.id }?.active = !word.active
-            _words.value = newList
+                val newList = _words.value.toMutableList()
+                newList.find { it.id == word.id }?.active = !word.active
+                _words.value = newList
+            } catch (e: Exception) {
+                onError()
+            }
         }
     }
 }
