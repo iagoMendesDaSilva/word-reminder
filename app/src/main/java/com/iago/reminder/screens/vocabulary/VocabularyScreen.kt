@@ -2,7 +2,10 @@ package com.iago.reminder.screens.vocabulary
 
 import android.content.Context
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -23,8 +26,7 @@ import com.iago.reminder.utils.errorWord
 
 @Composable
 fun VocabularyScreen(
-    navController: NavHostController,
-    openGlobalDialog: (dialog: GlobalDialogState) -> Unit
+    navController: NavHostController, openGlobalDialog: (dialog: GlobalDialogState) -> Unit
 ) {
 
     BackHandler(enabled = true) {}
@@ -33,56 +35,48 @@ fun VocabularyScreen(
     val viewModel = hiltViewModel<VocabularyScreenViewModel>()
 
     val word = viewModel.word.collectAsState().value
-//    val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = viewModel.loading.value)
 
-    if (viewModel.error.value != null)
-        openGlobalDialog(GlobalDialogState(viewModel.error.value!!) {
-            viewModel.error.value = null
-        })
+    if (viewModel.error.value != null) openGlobalDialog(GlobalDialogState(viewModel.error.value!!) {
+        viewModel.error.value = null
+    })
 
     LaunchedEffect(key1 = true) {
-        if (word == null)
-            viewModel.getWord()
+        if (word == null) viewModel.getWord()
     }
     Column(
         modifier = Modifier
             .fillMaxSize()
             .wrapContentSize(Alignment.Center)
     ) {
-        if (viewModel.loading.value)
-            Load(3.dp)
-        else
-            WordDict(word ?: errorWord, context, viewModel::getWord)
+        if (viewModel.loading.value) Load(3.dp)
+        else WordDict(word ?: errorWord, context, viewModel::getWord)
     }
 }
 
 @Composable
 fun WordDict(
-    word: Dictionary,
-    context: Context,
-    onRefresh: () -> Unit
+    word: Dictionary, context: Context, onRefresh: () -> Unit
 ) {
-//    SwipeRefresh(state = swipeRefreshState, onRefresh = onRefresh) {
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(25.dp)
-        ) {
-            item {
-                Header(word = word.word, context = context)
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(start = 10.dp)
-                ) {
-                    word.meanings.forEach { meaning ->
-                        SubTitle(meaning.partOfSpeech)
-                        meaning.definitions.forEach { definition ->
-                            Definition(definition = definition.definition)
-                        }
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(25.dp)
+    ) {
+        item {
+            Header(word = word.word, context = context)
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(start = 10.dp)
+            ) {
+                word.meanings.forEach { meaning ->
+                    SubTitle(meaning.partOfSpeech)
+                    meaning.definitions.forEach { definition ->
+                        Definition(definition = definition.definition)
                     }
                 }
             }
         }
     }
-//}
+
+}

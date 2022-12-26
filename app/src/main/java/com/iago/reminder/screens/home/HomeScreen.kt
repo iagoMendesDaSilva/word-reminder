@@ -3,7 +3,6 @@ package com.iago.reminder.screens.home
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -15,10 +14,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.iago.reminder.helpers.Load
 import com.iago.reminder.models.Word
-import com.iago.reminder.screens.home.commons.ButtonAdd
 import com.iago.reminder.screens.home.commons.Header
 import com.iago.reminder.screens.home.commons.ListWords
-import com.iago.reminder.ui.theme.White
 import com.iago.reminder.utils.GlobalDialogState
 
 
@@ -67,7 +64,6 @@ fun HomeScreen(
                 )
         }
     }
-    ButtonAdd(navController)
 }
 
 @Composable

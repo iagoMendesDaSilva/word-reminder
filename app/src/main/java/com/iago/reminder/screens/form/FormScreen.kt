@@ -1,13 +1,19 @@
 package com.iago.reminder.screens.form
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBackIos
 import androidx.compose.material.icons.filled.Public
 import androidx.compose.material.icons.filled.TextFields
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -20,6 +26,7 @@ import com.iago.reminder.R
 import com.iago.reminder.helpers.ButtonDefault
 import com.iago.reminder.helpers.InputDefault
 import com.iago.reminder.models.Word
+import com.iago.reminder.navigation.Screens
 import com.iago.reminder.screens.form.commons.TimeAndActiveContainer
 import com.iago.reminder.ui.theme.White
 import com.iago.reminder.utils.GlobalDialogState
@@ -34,7 +41,6 @@ fun FormScreen(
     cancelAlarm: (word: Word) -> Unit,
     openGlobalDialog: (dialog: GlobalDialogState) -> Unit
 ) {
-
 
     var word = remember { mutableStateOf(wordToEdit?.word ?: "") }
     var time = remember { mutableStateOf(getInitialTime(wordToEdit?.time)) }
