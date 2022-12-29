@@ -9,7 +9,7 @@ interface ReminderDao {
     @Query("SELECT * FROM words WHERE id=:id")
     suspend fun getWord(id: Int): Word
 
-    @Query("SELECT * FROM words ORDER BY active DESC")
+    @Query("SELECT * FROM words")
     suspend fun getWords(): List<Word>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

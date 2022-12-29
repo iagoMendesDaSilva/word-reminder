@@ -73,5 +73,9 @@
     <string name="button_logout">Logout</string>
     <string name="unregister">Are you sure you want to\npermanently delete your account?</string>
     <string name="button_unregister">Delete account</string>
+    <string name="exportWords">Would you like to export words?</string>
+    <string name="importWords">Would like to import words?</string>
+    <string name="search">Search a word.</string>
+    <string name="no_results">Word not found.</string>
 
 </resources>

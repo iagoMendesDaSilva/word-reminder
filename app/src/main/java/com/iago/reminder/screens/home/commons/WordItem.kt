@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -27,6 +28,10 @@ fun WordItem(
     val openDialog = remember { mutableStateOf(false) }
     val active = remember { mutableStateOf(word.active) }
 
+    LaunchedEffect(key1 = word) {
+        active.value = word.active
+    }
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -40,7 +45,7 @@ fun WordItem(
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
         WordAndTranslateColumn(word)
-        TimeAndSwitchColumn(word, viewModel, active,cancelAlarm,createAlarm)
+        TimeAndSwitchColumn(word, viewModel, active, cancelAlarm, createAlarm)
     }
 
     if (openDialog.value)

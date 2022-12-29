@@ -37,7 +37,6 @@ class MainActivity : ComponentActivity() {
         createNotificationChannel();
     }
 
-
     private fun createAlarm(word: Word) {
         val time = getTime(word.time)
         val intent = Intent(this@MainActivity, AlarmReceiver::class.java)
@@ -127,7 +126,7 @@ class MainActivity : ComponentActivity() {
                     paddingBottom = paddingValues.calculateBottomPadding(),
                     navController = navController,
                     createAlarm = ::createAlarm,
-                    cancelAlarm = ::cancelAlarm
+                    cancelAlarm = ::cancelAlarm,
                 ) { globalDialog.value = it }
             }
         }
