@@ -20,9 +20,11 @@ class AlarmReceiver : BroadcastReceiver() {
         val word = p1.getStringExtra("word")
         val translate = p1.getStringExtra("translate")
 
+        val code = System.currentTimeMillis().toInt()
+
         val pendingIntent = PendingIntent.getActivity(
             context,
-            System.currentTimeMillis().toInt(),
+            code,
             intent,
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
@@ -31,13 +33,16 @@ class AlarmReceiver : BroadcastReceiver() {
                 .setContentIntent(pendingIntent)
                 .setSmallIcon(R.drawable.ic_launcher_round)
                 .setContentTitle("Reminder")
-                .setContentText("$word means $translate")
+                .setContentText("What does $word means?")
                 .setPriority(Notification.PRIORITY_DEFAULT)
                 .setAutoCancel(true)
+                .setStyle(
+                    NotificationCompat.BigTextStyle()
+                        .setBigContentTitle("What does $word mean?")
+                        .bigText("It's $translate")
+                )
 
         val notificationManager = NotificationManagerCompat.from(context)
-        notificationManager.notify(System.currentTimeMillis().toInt(), builder.build())
+        notificationManager.notify(code, builder.build())
     }
-
-
 }

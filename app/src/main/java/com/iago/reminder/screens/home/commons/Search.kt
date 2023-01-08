@@ -10,25 +10,30 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.iago.reminder.R
 import com.iago.reminder.ui.theme.White
+import com.iago.reminder.ui.theme.WhiteOpacity
 
 @Composable
 fun SearchInput(search: MutableState<String>, filter: (text: String) -> Unit) {
-    OutlinedTextField(
-        colors = TextFieldDefaults.outlinedTextFieldColors(
+    TextField(
+        colors = TextFieldDefaults.textFieldColors(
             textColor = White,
-            focusedBorderColor = White,
-            unfocusedBorderColor = White,
-        ),
+            backgroundColor = MaterialTheme.colors.onBackground,
+            focusedIndicatorColor = Color.Transparent,
+            disabledIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent,
+
+            ),
         singleLine = true,
         label = {
             Text(
-                stringResource(id = R.string.search),
-                color = White,
-                style = MaterialTheme.typography.body1
+                color = WhiteOpacity,
+                style = MaterialTheme.typography.body1,
+                text = stringResource(id = R.string.search),
             )
         },
         leadingIcon = {
