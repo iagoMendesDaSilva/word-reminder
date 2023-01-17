@@ -1,5 +1,6 @@
 package com.iago.reminder.screens.home.commons
 
+import android.content.Context
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -24,9 +25,10 @@ fun ListWords(
     navController: NavHostController,
     search: String,
     openGlobalDialog: (dialog: GlobalDialogState) -> Unit,
+    context: Context,
     viewModel: HomeScreenViewModel,
-    createAlarm: (word: Word) -> Unit,
-    cancelAlarm: (word: Word) -> Unit
+    createAlarm: (word: Word,context: Context) -> Unit,
+    cancelAlarm:  (word: Word,context: Context) -> Unit,
 ) {
     if (data.isEmpty() && search.isEmpty())
         EmptyList()
@@ -44,7 +46,7 @@ fun ListWords(
                             messageID = R.string.exclude_word,
                             imageIconTwoOptions = R.drawable.icon_warning,
                             onDismiss = {}, onSuccess = {
-                                viewModel.deleteWord(item, cancelAlarm)
+                                viewModel.deleteWord(context, item, cancelAlarm)
                             })
                     )
                 },
@@ -55,7 +57,7 @@ fun ListWords(
                 hiddenContentEnd = { WordItemSwipedEnd(item.id) },
                 hiddenContentStart = { WordItemSwipedStart(item.id) },
             ) {
-                WordItem(item, viewModel, createAlarm, cancelAlarm)
+                WordItem(item, context, viewModel, createAlarm, cancelAlarm)
             }
             Spacer(modifier = Modifier.height(10.dp))
         }

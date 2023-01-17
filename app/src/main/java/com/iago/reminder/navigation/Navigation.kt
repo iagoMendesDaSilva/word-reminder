@@ -1,5 +1,6 @@
 package com.iago.reminder.navigation
 
+import android.content.Context
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -19,8 +20,8 @@ import com.iago.reminder.utils.GlobalDialogState
 fun Navigation(
     paddingBottom: Dp,
     navController: NavHostController,
-    createAlarm: (word: Word) -> Unit,
-    cancelAlarm: (word: Word) -> Unit,
+    createAlarm: (word: Word,context:Context) -> Unit,
+    cancelAlarm:  (word: Word,context:Context) -> Unit,
     openGlobalDialog: (dialog: GlobalDialogState) -> Unit
 ) {
 

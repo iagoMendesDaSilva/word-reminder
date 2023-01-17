@@ -1,5 +1,6 @@
 package com.iago.reminder.screens.home.commons
 
+import android.content.Context
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
@@ -16,15 +17,16 @@ import com.iago.reminder.ui.theme.White
 @Composable
 fun TimeAndSwitchColumn(
     word: Word,
+    context: Context,
     viewModel: HomeScreenViewModel,
     active: MutableState<Boolean>,
-    cancelAlarm: (word: Word) -> Unit,
-    createAlarm: (word: Word) -> Unit,
+    createAlarm: (word: Word,context:Context) -> Unit,
+    cancelAlarm:  (word: Word,context:Context) -> Unit,
 ) {
 
     LaunchedEffect(key1 = active.value) {
         if (word.active != active.value)
-            viewModel.editActiveWord(word, createAlarm,cancelAlarm){
+            viewModel.editActiveWord(word,context, createAlarm,cancelAlarm){
                 active.value = word.active
             }
     }

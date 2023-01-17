@@ -1,5 +1,6 @@
 package com.iago.reminder.screens.home
 
+import android.content.Context
 import android.net.Uri
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -26,8 +27,8 @@ import com.iago.reminder.utils.GlobalDialogState
 @Composable
 fun HomeScreen(
     navController: NavHostController,
-    createAlarm: (word: Word) -> Unit,
-    cancelAlarm: (word: Word) -> Unit,
+    createAlarm: (word: Word,context: Context) -> Unit,
+    cancelAlarm:  (word: Word,context: Context) -> Unit,
     openGlobalDialog: (dialog: GlobalDialogState) -> Unit,
 ) {
 
@@ -54,7 +55,7 @@ fun HomeScreen(
     }
 
     if (file.value != null) {
-        viewModel.importWords(LocalContext.current, file.value!!, cancelAlarm)
+        viewModel.importWords(LocalContext.current, file.value!!, createAlarm)
         file.value = null
     }
 
@@ -84,6 +85,7 @@ fun HomeScreen(
                     navController,
                     search.value,
                     openGlobalDialog,
+                    context,
                     viewModel,
                     createAlarm,
                     cancelAlarm,

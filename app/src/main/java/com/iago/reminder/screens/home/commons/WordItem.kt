@@ -1,5 +1,6 @@
 package com.iago.reminder.screens.home.commons
 
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -20,9 +21,10 @@ import com.iago.reminder.screens.home.HomeScreenViewModel
 @Composable
 fun WordItem(
     word: Word,
+    context: Context,
     viewModel: HomeScreenViewModel,
-    createAlarm: (word: Word) -> Unit,
-    cancelAlarm: (word: Word) -> Unit,
+    createAlarm: (word: Word,context:Context) -> Unit,
+    cancelAlarm:  (word: Word,context:Context) -> Unit,
 ) {
 
     val openDialog = remember { mutableStateOf(false) }
@@ -45,7 +47,7 @@ fun WordItem(
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
         WordAndTranslateColumn(word)
-        TimeAndSwitchColumn(word, viewModel, active, cancelAlarm, createAlarm)
+        TimeAndSwitchColumn(word, context, viewModel, active, createAlarm, cancelAlarm)
     }
 
     if (openDialog.value)

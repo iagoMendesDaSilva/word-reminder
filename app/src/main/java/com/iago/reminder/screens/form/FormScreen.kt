@@ -1,13 +1,11 @@
 package com.iago.reminder.screens.form
 
+import android.content.Context
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBackIos
 import androidx.compose.material.icons.filled.Public
 import androidx.compose.material.icons.filled.TextFields
 import androidx.compose.runtime.Composable
@@ -16,6 +14,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
@@ -26,7 +25,6 @@ import com.iago.reminder.R
 import com.iago.reminder.helpers.ButtonDefault
 import com.iago.reminder.helpers.InputDefault
 import com.iago.reminder.models.Word
-import com.iago.reminder.navigation.Screens
 import com.iago.reminder.screens.form.commons.TimeAndActiveContainer
 import com.iago.reminder.ui.theme.White
 import com.iago.reminder.utils.GlobalDialogState
@@ -37,8 +35,8 @@ import java.util.*
 fun FormScreen(
     navController: NavHostController,
     wordToEdit: Word?,
-    createAlarm: (word: Word) -> Unit,
-    cancelAlarm: (word: Word) -> Unit,
+    createAlarm: (word: Word, context: Context) -> Unit,
+    cancelAlarm: (word: Word, context: Context) -> Unit,
     openGlobalDialog: (dialog: GlobalDialogState) -> Unit
 ) {
 
@@ -47,6 +45,7 @@ fun FormScreen(
     var reminde = remember { mutableStateOf(wordToEdit?.active ?: true) }
     var translate = remember { mutableStateOf(wordToEdit?.word_translate ?: "") }
 
+    val context = LocalContext.current
     val viewModel = hiltViewModel<FormScreenViewModel>()
 
     if (viewModel.error.value != null)
@@ -94,6 +93,7 @@ fun FormScreen(
             viewModel.loading.value
         ) {
             onPressButton(
+                context,
                 wordToEdit?.id,
                 word,
                 translate,
@@ -146,6 +146,7 @@ fun getInitialTime(time: String?): String {
 }
 
 fun onPressButton(
+    context: Context,
     id: Int?,
     word: MutableState<String>,
     translate: MutableState<String>,
@@ -154,8 +155,8 @@ fun onPressButton(
     viewModel: FormScreenViewModel,
     openGlobalDialog: (dialog: GlobalDialogState) -> Unit,
     navController: NavHostController,
-    createAlarm: (word: Word) -> Unit,
-    cancelAlarm: (word: Word) -> Unit
+    createAlarm: (word: Word, context: Context) -> Unit,
+    cancelAlarm: (word: Word, context: Context) -> Unit,
 ) {
     if (word.value.isEmpty() || translate.value.isEmpty()) {
         viewModel.error.value = R.string.error_empty_word
@@ -163,6 +164,7 @@ fun onPressButton(
     }
     if (id != null)
         viewModel.editWord(
+            context,
             id,
             word.value,
             translate.value,
@@ -177,6 +179,7 @@ fun onPressButton(
         }
     else
         viewModel.saveWord(
+            context,
             word.value,
             translate.value,
             time.substring(0, 5),

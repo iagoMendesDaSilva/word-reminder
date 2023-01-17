@@ -41,7 +41,7 @@ class HomeScreenViewModel @Inject constructor(
         }
     }
 
-    fun importWords(context: Context, uri: Uri, createAlarm: (word: Word) -> Unit) {
+    fun importWords(context: Context, uri: Uri, createAlarm: (word: Word, context:Context) -> Unit) {
         try {
             val file = context.contentResolver.openFileDescriptor(uri, "r")
             val fileDescriptor: FileDescriptor = file!!.fileDescriptor
@@ -49,7 +49,7 @@ class HomeScreenViewModel @Inject constructor(
             val myType = object : TypeToken<List<Word>>() {}.type
             val json = FileInputStream(fileDescriptor).bufferedReader().use { it.readText() }
             val listWord = Gson().fromJson<List<Word>>(json, myType)
-            saveWord(listWord, createAlarm)
+            saveWord(listWord, createAlarm, context)
         } catch (e: Exception) {
             error.value = R.string.error_default
         }
@@ -75,7 +75,8 @@ class HomeScreenViewModel @Inject constructor(
 
     private fun saveWord(
         words: List<Word>,
-        createAlarm: (word: Word) -> Unit,
+        createAlarm: (word: Word, context: Context) -> Unit,
+        context: Context
     ) {
         viewModelScope.launch {
             var list = reminderDao.getWords()
@@ -86,7 +87,7 @@ class HomeScreenViewModel @Inject constructor(
                 reminderDao.addWord(wordItem)
 
                 if (word.active)
-                    createAlarm(wordItem)
+                    createAlarm(wordItem, context)
 
                 nextID++
             }
@@ -94,14 +95,14 @@ class HomeScreenViewModel @Inject constructor(
         }
     }
 
-    fun deleteWord(item: Word, cancelAlarm: (word: Word) -> Unit) {
+    fun deleteWord(context: Context,item: Word, cancelAlarm: (word: Word, context: Context) -> Unit) {
         viewModelScope.launch {
             loadingDelete.value = true
             error.value = null
 
             reminderDao.deleteWord(item)
             if (item.active)
-                cancelAlarm(item)
+                cancelAlarm(item, context)
 
             getWords()
 
@@ -111,8 +112,9 @@ class HomeScreenViewModel @Inject constructor(
 
     fun editActiveWord(
         word: Word,
-        createAlarm: (word: Word) -> Unit,
-        cancelAlarm: (word: Word) -> Unit,
+        context: Context,
+        createAlarm: (word: Word,context:Context) -> Unit,
+        cancelAlarm:  (word: Word,context:Context) -> Unit,
         onError: () -> Unit
     ) {
         viewModelScope.launch {
@@ -122,11 +124,13 @@ class HomeScreenViewModel @Inject constructor(
                 reminderDao.editWord(wordItem)
 
                 if (word.active)
-                    cancelAlarm(word)
+                    cancelAlarm(word,context)
                 else
-                    createAlarm(word)
+                    createAlarm(word,context)
 
-                getWords()
+                val newList = _words.value.toMutableList()
+                newList.find { it.id == word.id }?.active = !word.active
+                _words.value = newList
             } catch (e: Exception) {
                 onError()
             }
