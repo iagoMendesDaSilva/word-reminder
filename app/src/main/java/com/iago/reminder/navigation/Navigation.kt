@@ -12,7 +12,7 @@ import com.iago.reminder.models.Word
 import com.iago.reminder.screens.form.FormScreen
 import com.iago.reminder.screens.home.HomeScreen
 import com.iago.reminder.screens.splash.SplashScreen
-import com.iago.reminder.screens.vocabulary.VocabularyScreen
+import com.iago.reminder.screens.practice.PracticeScreen
 import com.iago.reminder.utils.GlobalDialogState
 
 
@@ -39,8 +39,8 @@ fun Navigation(
             HomeScreen(navController, createAlarm, cancelAlarm, openGlobalDialog)
         }
 
-        composable(Screens.VocabularyScreen.name) {
-            VocabularyScreen(navController, openGlobalDialog)
+        composable(Screens.PracticeScreen.name) {
+            PracticeScreen(navController, openGlobalDialog)
         }
 
         composable(

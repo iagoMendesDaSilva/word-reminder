@@ -9,5 +9,5 @@ See on playstore https://play.google.com/store/apps/details?id=com.iago.reminder
 <img src="/demonstration/list.png" width="250"/>
 <img src="/demonstration/word.png" width="250"/>
 <img src="/demonstration/form.png" width="250"/>
-<img src="/demonstration/discover.png" width="250"/>
+<img src="/demonstration/practice.png" width="250"/>
 </div>

@@ -5,7 +5,7 @@ import java.lang.IllegalArgumentException
 enum class Screens {
     HomeScreen,
     SplashScreen,
-    VocabularyScreen,
+    PracticeScreen,
     FormScreen;
 
     companion object {
@@ -13,7 +13,7 @@ enum class Screens {
             HomeScreen.name -> HomeScreen
             SplashScreen.name->SplashScreen
             FormScreen.name -> FormScreen
-            VocabularyScreen.name -> VocabularyScreen
+            PracticeScreen.name -> PracticeScreen
             null -> SplashScreen
             else -> throw  IllegalArgumentException("Route $route is not recognized")
         }

@@ -77,5 +77,8 @@
     <string name="importWords">Would like to import words?</string>
     <string name="search">Search a word.</string>
     <string name="no_results">Word not found.</string>
+    <string name="min_words">You must have at least 3 words.</string>
+    <string name="unavailable">Unavailable service</string>
+    <string name="find_pair">Find the pair of %1$s</string>
 
 </resources>

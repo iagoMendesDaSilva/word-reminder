@@ -1,6 +1,7 @@
 package com.iago.reminder.screens.form
 
 import android.content.Context
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
@@ -25,6 +26,7 @@ import com.iago.reminder.R
 import com.iago.reminder.helpers.ButtonDefault
 import com.iago.reminder.helpers.InputDefault
 import com.iago.reminder.models.Word
+import com.iago.reminder.navigation.Screens
 import com.iago.reminder.screens.form.commons.TimeAndActiveContainer
 import com.iago.reminder.ui.theme.White
 import com.iago.reminder.utils.GlobalDialogState
@@ -174,7 +176,7 @@ fun onPressButton(
             cancelAlarm
         ) {
             openGlobalDialog(GlobalDialogState(R.string.word_edited, false) {
-                navController.popBackStack()
+                navController.navigate(Screens.HomeScreen.name, null)
             })
         }
     else
