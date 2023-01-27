@@ -19,6 +19,7 @@ import com.iago.reminder.screens.practice.commons.ListOptions
 import com.iago.reminder.screens.practice.commons.MinWords
 import com.iago.reminder.screens.practice.commons.Title
 import com.iago.reminder.utils.GlobalDialogState
+import com.iago.reminder.utils.PRACTICE_TYPE
 import kotlin.random.Random
 
 @Composable
@@ -30,7 +31,7 @@ fun PracticeScreen(
     val viewModel = hiltViewModel<PracticeScreenViewModel>()
     val words = viewModel.words.collectAsState().value
 
-    var guessTranslate = remember { mutableStateOf(false) }
+    var guessTranslate = remember { mutableStateOf(PRACTICE_TYPE.WORD) }
     var wordPressed = remember { mutableStateOf<Int?>(null) }
     var wordIndex = remember { mutableStateOf(if (words.size > 2) Random.nextInt(words.size) else 0) }
 
@@ -58,7 +59,7 @@ fun PracticeScreen(
             ButtonDefault(stringResource(R.string.button_next)) {
                 wordPressed.value = null
                 wordIndex.value = Random.nextInt(words.size)
-                guessTranslate.value = Random.nextBoolean()
+                guessTranslate.value = PRACTICE_TYPE.values()[Random.nextInt(PRACTICE_TYPE.values().size)]
             }
         }
     }

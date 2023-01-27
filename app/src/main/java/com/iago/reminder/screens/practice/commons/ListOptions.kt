@@ -10,19 +10,25 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.iago.reminder.helpers.ButtonSpeaker
 import com.iago.reminder.models.Word
 import com.iago.reminder.ui.theme.*
+import com.iago.reminder.utils.PRACTICE_TYPE
 
 @Composable
 fun ListOptions(
-    guessTranslate: Boolean,
+    guessTranslate: PRACTICE_TYPE,
     word: Word,
     wordPressed: MutableState<Int?>,
     options: List<Word>
 ) {
+
+    val context = LocalContext.current
+
     Column(
         Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -45,19 +51,28 @@ fun ListOptions(
                     )
                     .padding(15.dp)
                     .clickable {
-                        wordPressed.value = index
+                        if (wordPressed.value == null)
+                            wordPressed.value = index
                     }) {
-                Text(
-                    maxLines = 1,
-                    color = White,
-                    textAlign = TextAlign.Center,
-                    overflow = TextOverflow.Ellipsis,
-                    style = MaterialTheme.typography.body2,
-                    text = if (guessTranslate) option.word_translate else option.word,
-                )
+                if (guessTranslate == PRACTICE_TYPE.AUDIO)
+                    ButtonSpeaker(context = context, word = option.word)
+                else
+                    Text(
+                        maxLines = 1,
+                        color = White,
+                        textAlign = TextAlign.Center,
+                        overflow = TextOverflow.Ellipsis,
+                        style = MaterialTheme.typography.body2,
+                        text = if (guessTranslate == PRACTICE_TYPE.WORD_TRANSLATE) option.word else option.word_translate,
+                    )
             }
         }
     }
+}
+
+@Composable
+fun InputTranslate() {
+    TODO("Not yet implemented")
 }
 
 fun getColor(option: String, wordTranslate: String, wordPressed: Int?, words: List<Word>): Color {
