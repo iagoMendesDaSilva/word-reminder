@@ -1,6 +1,5 @@
 package com.iago.reminder.screens.practice.commons
 
-import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -35,25 +34,21 @@ fun Title(guessTranslate: PRACTICE_TYPE, word: Word) {
             .height(100.dp),
         horizontalAlignment = Alignment.Start,
     ) {
-       Row(verticalAlignment = Alignment.CenterVertically) {
-           Text(
-               maxLines = 2,
-               color = White,
-               overflow = TextOverflow.Ellipsis,
-               style = MaterialTheme.typography.h1,
-               modifier=Modifier.padding(end = 10.dp),
-               text = stringResource(R.string.find_pair),
-           )
-           if(guessTranslate == PRACTICE_TYPE.AUDIO_TRANSLATE)
-               ButtonSpeaker(context = context, word = wordToGuess)
-               else
-               Text(
-                   maxLines = 1,
-                   color = White,
-                   style = MaterialTheme.typography.h1,
-                   overflow = TextOverflow.Ellipsis,
-                   text = wordToGuess,
-               )
-       }
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                maxLines = 2,
+                color = White,
+                overflow = TextOverflow.Ellipsis,
+                style = MaterialTheme.typography.h1,
+                modifier = Modifier.padding(end = 10.dp),
+                text = stringResource(
+                    R.string.find_pair,
+                    if (guessTranslate != PRACTICE_TYPE.AUDIO_TRANSLATE) wordToGuess else ""
+                ),
+            )
+            if (guessTranslate == PRACTICE_TYPE.AUDIO_TRANSLATE)
+                ButtonSpeaker(context = context, word = wordToGuess)
+
+        }
     }
 }

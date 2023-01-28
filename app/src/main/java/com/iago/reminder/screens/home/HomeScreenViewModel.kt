@@ -17,6 +17,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.io.*
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 
 
@@ -57,16 +59,20 @@ class HomeScreenViewModel @Inject constructor(
 
     fun exportWords(context: Context, words: List<Word>) {
         try {
+            val currentDate = Calendar.getInstance().time
+            val dateFormat = SimpleDateFormat("MM_dd_yyyy")
+            val date = dateFormat.format(currentDate)
+
             val json = Gson().toJson(words).toString()
             val file = File(
-                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS),
-                "reminder_my_words.json"
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+                "reminder_my_words_$date.json"
             )
             val fileWriter = FileWriter(file)
             val bufferedWriter = BufferedWriter(fileWriter)
             bufferedWriter.write(json)
             bufferedWriter.close()
-            Toast.makeText(context, "File exported to Documents", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "File exported to Downloads", Toast.LENGTH_SHORT).show()
         } catch (e: Exception) {
             error.value = R.string.error_default
         }
