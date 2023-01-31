@@ -18,6 +18,7 @@ import com.iago.reminder.helpers.ButtonSpeaker
 import com.iago.reminder.models.Word
 import com.iago.reminder.ui.theme.*
 import com.iago.reminder.utils.PRACTICE_TYPE
+import com.iago.reminder.utils.Speaker
 
 @Composable
 fun ListOptions(
@@ -51,11 +52,24 @@ fun ListOptions(
                     )
                     .padding(15.dp)
                     .clickable {
-                        if (wordPressed.value == null)
+                        if (wordPressed.value == null) {
                             wordPressed.value = index
+                            Speaker.playWordAudio(context, option.word)
+                        }
                     }) {
                 if (guessTranslate == PRACTICE_TYPE.AUDIO)
-                    ButtonSpeaker(context = context, word = option.word)
+                    Row() {
+                        ButtonSpeaker(context = context, word = option.word)
+                        if (wordPressed.value != null)
+                            Text(
+                                maxLines = 1,
+                                color = White,
+                                text = option.word,
+                                overflow = TextOverflow.Ellipsis,
+                                modifier=Modifier.padding(start=5.dp),
+                                style = MaterialTheme.typography.body2,
+                            )
+                    }
                 else
                     Text(
                         maxLines = 1,

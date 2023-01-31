@@ -13,8 +13,8 @@ android {
         applicationId "com.iago.reminder"
         minSdk 21
         targetSdk 32
-        versionCode 12
-        versionName "1.7.1"
+        versionCode 13
+        versionName "1.7.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -23,10 +23,7 @@ android {
 
         Properties properties = new Properties()
         properties.load(project.rootProject.file("local.properties").newDataInputStream())
-
-        buildConfigField "String", "API_WORD_BASE_URL", "\"${properties.getProperty("API_WORD_BASE_URL")}\""
-        buildConfigField "String", "API_DICT_BASE_URL", "\"${properties.getProperty("API_DICT_BASE_URL")}\""
-    }
+ }
 
     buildTypes {
         release {
