@@ -16,7 +16,7 @@ import com.iago.reminder.ui.theme.WhiteOpacity
 @Composable
 fun WordAndTranslateColumn(word: Word) {
     Column(
-        modifier = Modifier.fillMaxWidth(.8f),
+        modifier = Modifier.fillMaxWidth(.7f),
         horizontalAlignment = Alignment.Start
     ) {
         Text(text = word.word, maxLines = 1, color = White, style = MaterialTheme.typography.body2)

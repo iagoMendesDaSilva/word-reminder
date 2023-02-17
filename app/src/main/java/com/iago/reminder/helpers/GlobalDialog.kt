@@ -33,7 +33,7 @@ fun GlobalDialog(
         content = {
             Column(
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .fillMaxWidth(.95f)
                     .height(250.dp)
                     .background(color = White, shape = MaterialTheme.shapes.medium)
                     .padding(8.dp),

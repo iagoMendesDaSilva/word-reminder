@@ -1,9 +1,11 @@
 package com.iago.reminder.screens.practice.commons
 
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -15,6 +17,7 @@ import com.iago.reminder.helpers.ButtonSpeaker
 import com.iago.reminder.models.Word
 import com.iago.reminder.ui.theme.White
 import com.iago.reminder.utils.PRACTICE_TYPE
+import com.iago.reminder.utils.Speaker
 
 @Composable
 fun Title(guessTranslate: PRACTICE_TYPE, word: Word) {
@@ -28,6 +31,12 @@ fun Title(guessTranslate: PRACTICE_TYPE, word: Word) {
             PRACTICE_TYPE.AUDIO_TRANSLATE -> word.word
             else -> word.word_translate
         }
+
+    LaunchedEffect(key1 = guessTranslate, key2 = word, key3 = wordToGuess){
+        if(guessTranslate == PRACTICE_TYPE.AUDIO_TRANSLATE)
+            Speaker.playWordAudio(context, wordToGuess)
+    }
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
