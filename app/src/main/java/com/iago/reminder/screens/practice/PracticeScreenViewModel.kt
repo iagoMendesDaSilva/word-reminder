@@ -3,8 +3,8 @@ package com.iago.reminder.screens.practice
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.iago.reminder.database.ReminderDao
 import com.iago.reminder.models.Word
+import com.iago.reminder.repository.ReminderRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PracticeScreenViewModel @Inject constructor(
-    private val reminderDao: ReminderDao
+    private val reminderRepository: ReminderRepository
 ) : ViewModel() {
 
     var loading = mutableStateOf(true)
@@ -26,7 +26,7 @@ class PracticeScreenViewModel @Inject constructor(
         viewModelScope.launch {
             loading.value = true
             error.value = null
-            _words.value = reminderDao.getWords()
+            _words.value = reminderRepository.getWords()
             loading.value = false
         }
     }

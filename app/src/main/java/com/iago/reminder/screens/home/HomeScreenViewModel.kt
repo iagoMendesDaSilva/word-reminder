@@ -10,8 +10,8 @@ import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.iago.reminder.R
-import com.iago.reminder.database.ReminderDao
 import com.iago.reminder.models.Word
+import com.iago.reminder.repository.ReminderRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -24,7 +24,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeScreenViewModel @Inject constructor(
-    private val reminderDao: ReminderDao
+    private val reminderRepository: ReminderRepository
 ) : ViewModel() {
 
     var loading = mutableStateOf(true)
@@ -38,7 +38,7 @@ class HomeScreenViewModel @Inject constructor(
         viewModelScope.launch {
             loading.value = true
             error.value = null
-            _words.value = reminderDao.getWords().reversed().sortedBy { !it.active }
+            _words.value = reminderRepository.getWords().reversed().sortedBy { !it.active }
             loading.value = false
         }
     }
@@ -85,12 +85,12 @@ class HomeScreenViewModel @Inject constructor(
         context: Context
     ) {
         viewModelScope.launch {
-            var list = reminderDao.getWords()
+            var list = reminderRepository.getWords()
             var nextID = if (list.isEmpty()) 1 else list[list.lastIndex].id + 1
 
             words.forEach { word ->
                 var wordItem = Word(nextID, word.time, word.word, word.word_translate, word.active)
-                reminderDao.addWord(wordItem)
+                reminderRepository.addWord(wordItem)
 
                 if (word.active)
                     createAlarm(wordItem, context)
@@ -106,7 +106,7 @@ class HomeScreenViewModel @Inject constructor(
             loadingDelete.value = true
             error.value = null
 
-            reminderDao.deleteWord(item)
+            reminderRepository.deleteWord(item)
             if (item.active)
                 cancelAlarm(item, context)
 
@@ -127,7 +127,7 @@ class HomeScreenViewModel @Inject constructor(
             try {
                 var wordItem =
                     Word(word.id, word.time, word.word, word.word_translate, !word.active)
-                reminderDao.editWord(wordItem)
+                reminderRepository.editWord(wordItem)
 
                 if (word.active)
                     cancelAlarm(word,context)

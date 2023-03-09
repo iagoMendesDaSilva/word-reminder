@@ -4,15 +4,15 @@ import android.content.Context
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.iago.reminder.database.ReminderDao
 import com.iago.reminder.models.Word
+import com.iago.reminder.repository.ReminderRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class FormScreenViewModel @Inject constructor(
-    private val reminderDao: ReminderDao
+    private val reminderRepository: ReminderRepository
 ) : ViewModel() {
 
     var loading = mutableStateOf(false)
@@ -35,11 +35,11 @@ class FormScreenViewModel @Inject constructor(
         viewModelScope.launch {
             startAction()
 
-            var list = reminderDao.getWords()
+            var list = reminderRepository.getWords()
             var nextID = if (list.isEmpty()) 1 else list[list.lastIndex].id + 1
 
             var wordItem = Word(nextID, time, word, wordTranslate, active)
-            reminderDao.addWord(wordItem)
+            reminderRepository.addWord(wordItem)
 
             if (active)
                 createAlarm(wordItem, context)
@@ -63,7 +63,7 @@ class FormScreenViewModel @Inject constructor(
         viewModelScope.launch {
             startAction()
             var wordItem = Word(id, time, word, wordTranslate, active)
-            reminderDao.editWord(wordItem)
+            reminderRepository.editWord(wordItem)
 
             cancelAlarm(wordItem, context)
             if (active)

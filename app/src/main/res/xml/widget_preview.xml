@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/round_rect"
+    android:padding="16dp">
+
+   <LinearLayout
+       android:id="@+id/word_container"
+       android:gravity="center_vertical"
+       android:paddingBottom="7dp"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+       <TextView
+           android:id="@+id/word_textview"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="Word"
+           android:textColor="@android:color/white"
+           android:textSize="18sp"
+           android:paddingLeft="5dp"
+           android:layout_weight="1"
+           android:textStyle="bold" />
+
+       <ImageView
+           android:id="@+id/ic_refresh"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_alignBaseline="@id/word_textview"
+           android:layout_alignParentEnd="true"
+           android:src="@drawable/ic_refresh"
+           android:tint="@android:color/white"
+           android:layout_marginStart="16dp" />
+   </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/translate_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/word_container"
+        android:background="@drawable/round_rect_dark"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/translate_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_eye"
+            android:tint="@android:color/white" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
