@@ -113,9 +113,4 @@ dependencies {
 
     //Glance
     implementation("androidx.glance:glance-appwidget:1.0.0-alpha05")
-
-    //Worker
-    implementation("androidx.work:work-runtime-ktx:2.8.0-alpha02")
-    implementation("androidx.hilt:hilt-work:1.0.0")
-
 }

@@ -1,8 +1,9 @@
 package com.iago.reminder.utils
 
 import android.content.Context
-import android.util.Log
+import androidx.compose.foundation.clickable
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
@@ -29,15 +30,10 @@ import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
 import androidx.glance.unit.ColorProvider
-import androidx.hilt.work.HiltWorker
 import androidx.room.Room
-import androidx.work.CoroutineWorker
-import androidx.work.WorkerParameters
 import com.iago.reminder.R
 import com.iago.reminder.database.ReminderDatabase
 import com.iago.reminder.repository.ReminderRepository
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedInject
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import java.io.File
@@ -74,19 +70,55 @@ class Widget : GlanceAppWidget() {
         val prefs = currentState<Preferences>()
 
         var word = prefs[wordPreferenceKey] ?: ""
-        var translate = prefs[translatePreferenceKey] ?: context.getString(R.string.emptyText)
+        var translate = prefs[translatePreferenceKey] ?: ""
 
         Column(
             verticalAlignment = Alignment.CenterVertically,
             modifier = GlanceModifier.fillMaxSize().background(Color(0xFF4E40D9)).padding(10.dp)
         ) {
-            Header(word)
-            Spacer(modifier = GlanceModifier.fillMaxWidth().height(5.dp))
-            if (translate.isEmpty())
-                HideText(word)
-            else
-                TranslateText(translate)
+            if (word.isEmpty()) {
+                StartQuiz(context)
+            } else
+                GuessWord(word, translate)
         }
+    }
+
+    @Composable
+    fun StartQuiz(context: Context) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = GlanceModifier.fillMaxWidth(),
+        ) {
+            Row(
+                modifier = GlanceModifier.defaultWeight(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                TextWidget(
+                    text = context.getString(R.string.start_quiz),
+                    modifier = GlanceModifier.clickable(
+                        actionRunCallback<UpdateWordActionCallback>()
+                    )
+                )
+                Image(
+                    contentDescription = null,
+                    modifier = GlanceModifier.padding(start = 5.dp)
+                        .clickable(
+                        actionRunCallback<UpdateWordActionCallback>()
+                    ),
+                    provider = ImageProvider(R.drawable.ic_play),
+                )
+            }
+        }
+    }
+
+    @Composable
+    fun GuessWord(word: String, translate: String) {
+        Header(word)
+        Spacer(modifier = GlanceModifier.fillMaxWidth().height(5.dp))
+        if (translate.isEmpty())
+            HideText(word)
+        else
+            TranslateText(translate)
     }
 
 }
@@ -119,19 +151,6 @@ fun Header(word: String) {
                 provider = ImageProvider(R.drawable.ic_refresh),
             )
         }
-    }
-}
-
-@Composable
-fun ButtonGetWord(context: Context) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = GlanceModifier.fillMaxSize().clickable(
-            actionRunCallback<UpdateWordActionCallback>()
-        ),
-    ) {
-        TextWidget(text = context.getString(R.string.get_word))
     }
 }
 
@@ -256,30 +275,10 @@ class UpdateWordActionCallback : ActionCallback {
                     context,
                     glanceId,
                     translateParamKey,
-                    context.getString(R.string.emptyText)
+                    ""
                 )
 
             }
-        }
-    }
-}
-
-@HiltWorker
-internal class WordWorkerTask @AssistedInject constructor(
-    @Assisted private val context: Context,
-    @Assisted workParams: WorkerParameters,
-    private val reminderRepository: ReminderRepository,
-) : CoroutineWorker(context, workParams) {
-
-    override suspend fun doWork(): Result {
-        val words = reminderRepository.getWords()
-        return try {
-//            if (words.isNotEmpty())
-            Log.d("TAG", "a")
-            updateWord(context, words.random().word)
-            Result.success()
-        } catch (e: Exception) {
-            Result.retry()
         }
     }
 }
