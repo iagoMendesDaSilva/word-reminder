@@ -11,10 +11,8 @@ import androidx.navigation.compose.composable
 import com.iago.reminder.models.Word
 import com.iago.reminder.screens.form.FormScreen
 import com.iago.reminder.screens.home.HomeScreen
-import com.iago.reminder.screens.splash.SplashScreen
 import com.iago.reminder.screens.practice.PracticeScreen
 import com.iago.reminder.utils.GlobalDialogState
-
 
 @Composable
 fun Navigation(
@@ -28,12 +26,8 @@ fun Navigation(
     NavHost(
         modifier = Modifier.padding(bottom = paddingBottom),
         navController = navController,
-        startDestination = Screens.SplashScreen.name
+        startDestination = Screens.HomeScreen.name
     ) {
-
-        composable(Screens.SplashScreen.name) {
-            SplashScreen(navController, openGlobalDialog)
-        }
 
         composable(Screens.HomeScreen.name) {
             HomeScreen(navController, createAlarm, cancelAlarm, openGlobalDialog)

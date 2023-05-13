@@ -61,7 +61,7 @@ class AlarmReceiver : BroadcastReceiver() {
             val builder: NotificationCompat.Builder =
                 NotificationCompat.Builder(context, CHANNEL_ID)
                     .setContentIntent(pendingIntent)
-                    .setSmallIcon(R.drawable.ic_launcher_round)
+                    .setSmallIcon(R.drawable.icon_error)
                     .setContentTitle("Reminder")
                     .setContentText("What does $word means?")
                     .setPriority(Notification.PRIORITY_DEFAULT)

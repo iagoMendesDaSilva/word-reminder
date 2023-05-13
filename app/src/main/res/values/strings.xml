@@ -1,47 +1,13 @@
 <resources>
-    <string name="app_name">Reminder</string>
-
-    <string name="button_get_started">Get Started</string>
-    <string name="button_have_account">I Already Have an Account</string>
-    <string name="button_sign_in">Sign In</string>
-    <string name="button_sing_up">Sign Up</string>
-    <string name="button_reset_password">Reset password</string>
-
-    <string name="error_login">Incorrect email or password.</string>
+    <string name="app_name">Word Reminder</string>
     <string name="error_default">Oops, something went wrong. Please try again later.</string>
-    <string name="error_empty_email">Email can\'t be empty.</string>
-    <string name="error_empty_login">Email and\\\or password can\'t be empty.</string>
-    <string name="error_session">Session expired.</string>
-    <string name="error_email_registered">Email already registered.</string>
-    <string name="error_email_not_registered">Email not registered.</string>
-
     <string name="ok">Ok</string>
     <string name="oops">Oops!</string>
-    <string name="get_started">Let\'s get started.</string>
-    <string name="forgot_password">Forgot password?</string>
-    <string name="get_started_desc">Enter the email associated with your account and we\'ll send a email with instructions to %s</string>
-    <string name="forgot_password_desc">reset your password.</string>
-    <string name="register_desc">get you in.</string>
     <string name="button_next">Next</string>
-    <string name="error_user_registered">User already registered.</string>
-    <string name="create_password">Create new password</string>
-    <string name="password_desc">Your password must contain at least five characters and one number.</string>
-    <string name="confirm_password">Confirm Password</string>
-    <string name="password">Password</string>
-    <string name="error_empty_passwords">Password and Confirm password can\'t be empty.</string>
-    <string name="error_strong_password">Password must be at least medium.</string>
-    <string name="error_different_password">Passwords must be equals</string>
-    <string name="success_register">Thank you for signing up\nPlease confirm your subscription your email address.</string>
-    <string name="success">Success!</string>
-    <string name="button_submit">Submit</string>
-    <string name="verification_code">Verification Code</string>
-    <string name="verification_code_desc">Please type the verification code sent to your email.</string>
-    <string name="error_verification_code">Code incorrect or expired.</string>
-    <string name="error_empty_code">All codes are mandatory.</string>
+   <string name="success">Success!</string>
     <string name="my_words">My words.</string>
     <string name="button_cancel">Cancel</string>
     <string name="button_confirm">Confirm</string>
-    <string name="logout">Oh no! You\'re leaving..\nAre you sure?</string>
     <string name="translate">Translate</string>
     <string name="button_save">Save</string>
     <string name="word">Word</string>
@@ -57,22 +23,8 @@
     <string name="no_words">No words yet.</string>
     <string name="first_word">Tap + button to add your first word.</string>
     <string name="exclude_word">You\'ll delete this word,\nAre you sure?</string>
-    <string name="error_notification">Unstable server.\nNotifications may be disabled.</string>
-    <string name="logo_desc">logo reminder</string>
+    <string name="logo_desc">logo Word Reminder</string>
     <string name="meditation_desc">meditation girl logo</string>
-    <string name="email">Email</string>
-    <string name="icon_email_desc">icon email</string>
-    <string name="Password">Password</string>
-    <string name="icon_password_desc">icon password</string>
-    <string name="no_password">No Password</string>
-    <string name="weak">Weak</string>
-    <string name="regular">Regular</string>
-    <string name="strong">Strong</string>
-    <string name="regex_strong">^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{6,})</string>
-    <string name="regex_regular">^(?=.*[a-zA-Z])(?=.*[0-9])(?=.{6,})</string>
-    <string name="button_logout">Logout</string>
-    <string name="unregister">Are you sure you want to\npermanently delete your account?</string>
-    <string name="button_unregister">Delete account</string>
     <string name="exportWords">Would you like to export words?</string>
     <string name="importWords">Would like to import words?</string>
     <string name="search">Search a word.</string>
@@ -80,7 +32,4 @@
     <string name="min_words">You must have at least 3 words.</string>
     <string name="unavailable">Unavailable service</string>
     <string name="find_pair">Find the pair of %1$s</string>
-    <string name="start_quiz">Start Quiz</string>
-    <string name="desc_widget">Practice new vocabulary.</string>
-
 </resources>

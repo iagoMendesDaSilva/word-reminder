@@ -1,6 +1,6 @@
-# Reminder
+# Word Reminder
 
-Reminder is an application that helps memorize new vocabulary by sending notifications. Also you can practice the vocabulary in the application practice tab or with its Widget.
+Word Reminder is an application that helps memorize new vocabulary by sending notifications. Also you can practice the vocabulary in the application practice tab.
 
 
 <img src="/demonstration/mockup.png"/><br>

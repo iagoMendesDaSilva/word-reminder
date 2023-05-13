@@ -13,8 +13,8 @@ android {
         applicationId "com.iago.reminder"
         minSdk 21
         targetSdk 33
-        versionCode 15
-        versionName "1.7.4"
+        versionCode 16
+        versionName "1.7.6"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -110,7 +110,4 @@ dependencies {
 
     //SwipeTOReveal
     implementation "de.charlex.compose:revealswipe:1.0.0"
-
-    //Glance
-    implementation("androidx.glance:glance-appwidget:1.0.0-alpha05")
 }
