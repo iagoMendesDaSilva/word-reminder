@@ -1,15 +1,20 @@
 package com.iago.reminder
 
+import android.Manifest
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.rememberNavController
 import com.iago.reminder.helpers.GlobalDialog
 import com.iago.reminder.navigation.BottomNav
@@ -25,20 +30,30 @@ import java.util.*
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
+    private val launcher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {}
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             App()
         }
+        askPermission()
         createNotificationChannel();
+    }
+
+    private fun askPermission() {
+        if (checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED)
+        else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                launcher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
+        }
     }
 
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
-                CHANNEL_ID,
-                CHANNEL_NAME,
-                NotificationManager.IMPORTANCE_DEFAULT
+                CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT
             )
 
             val notificationManager = getSystemService(NotificationManager::class.java)
@@ -54,25 +69,22 @@ class MainActivity : ComponentActivity() {
 
         ReminderTheme {
 
-            if (globalDialog.value != null)
-                GlobalDialog(
-                    messageID = globalDialog.value!!.messageID,
-                    error = globalDialog.value!!.error,
-                    onDismiss = {
-                        globalDialog.value!!.onDismiss()
-                        globalDialog.value = null
-                    },
-                    onSuccess = {
-                        globalDialog.value!!.onSuccess!!()
-                        globalDialog.value = null
-                    },
-                    imageIconTwoOptions = globalDialog.value!!.imageIconTwoOptions
+            if (globalDialog.value != null) GlobalDialog(
+                messageID = globalDialog.value!!.messageID,
+                error = globalDialog.value!!.error,
+                onDismiss = {
+                    globalDialog.value!!.onDismiss()
+                    globalDialog.value = null
+                },
+                onSuccess = {
+                    globalDialog.value!!.onSuccess!!()
+                    globalDialog.value = null
+                },
+                imageIconTwoOptions = globalDialog.value!!.imageIconTwoOptions
 
-                )
+            )
 
-            Scaffold(
-                bottomBar = { BottomNav(navController = navController) }
-            ) { paddingValues ->
+            Scaffold(bottomBar = { BottomNav(navController = navController) }) { paddingValues ->
                 Navigation(
                     paddingBottom = paddingValues.calculateBottomPadding(),
                     navController = navController,

@@ -11,10 +11,10 @@ android {
 
     defaultConfig {
         applicationId "com.iago.reminder"
-        minSdk 21
+        minSdk 23
         targetSdk 33
-        versionCode 16
-        versionName "1.7.6"
+        versionCode 17
+        versionName "1.7.7"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -110,4 +110,7 @@ dependencies {
 
     //SwipeTOReveal
     implementation "de.charlex.compose:revealswipe:1.0.0"
+
+    // Permissions
+    implementation "com.google.accompanist:accompanist-permissions:0.28.0"
 }
