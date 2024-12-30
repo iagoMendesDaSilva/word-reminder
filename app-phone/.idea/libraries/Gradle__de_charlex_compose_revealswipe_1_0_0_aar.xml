@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: de.charlex.compose:revealswipe:1.0.0@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/c482159cce88564ff6470b8ff146a1dd/transformed/revealswipe-1.0.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/c482159cce88564ff6470b8ff146a1dd/transformed/revealswipe-1.0.0/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/de.charlex.compose/revealswipe/1.0.0/3643208dae384dce2b07624eab6b8395da68ee4d/revealswipe-1.0.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
