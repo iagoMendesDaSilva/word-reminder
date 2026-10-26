@@ -2,29 +2,20 @@ package com.iago.reminder.repository
 
 import com.iago.reminder.database.ReminderDao
 import com.iago.reminder.models.Word
-import javax.inject.Inject
+import kotlinx.coroutines.flow.Flow
 
-class ReminderRepository @Inject constructor(
+class ReminderRepository(
     private val reminderDao: ReminderDao
 ) {
+    suspend fun getWord(id: Int): Word? = reminderDao.getWord(id)
 
-    suspend fun getWord(id: Int): Word {
-        return reminderDao.getWord(id)
-    }
+    suspend fun getWords(): List<Word> = reminderDao.getWords()
 
-    suspend fun getWords(): List<Word> {
-        return reminderDao.getWords()
-    }
+    fun getWordsFlow(): Flow<List<Word>> = reminderDao.getWordsFlow()
 
-    suspend fun addWord(word: Word) {
-        return reminderDao.addWord(word)
-    }
+    suspend fun addWord(word: Word): Long = reminderDao.addWord(word)
 
-    suspend fun editWord(word: Word) {
-        return reminderDao.editWord(word)
-    }
+    suspend fun editWord(word: Word): Int = reminderDao.editWord(word)
 
-    suspend fun deleteWord(word: Word) {
-        return reminderDao.deleteWord(word)
-    }
+    suspend fun deleteWord(word: Word): Int = reminderDao.deleteWord(word)
 }

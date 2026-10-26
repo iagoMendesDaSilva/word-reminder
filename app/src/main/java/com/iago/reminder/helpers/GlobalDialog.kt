@@ -1,133 +1,116 @@
 package com.iago.reminder.helpers
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.HelpOutline
+import androidx.compose.material.icons.rounded.CheckCircle
+import androidx.compose.material.icons.rounded.ErrorOutline
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
 import com.iago.reminder.R
-import com.iago.reminder.ui.theme.*
+import com.iago.reminder.ui.theme.BackgroundDark
+import com.iago.reminder.ui.theme.Error
+import com.iago.reminder.ui.theme.Primary
+import com.iago.reminder.ui.theme.Success
+import com.iago.reminder.ui.theme.White
+import com.iago.reminder.ui.theme.White70
+import com.iago.reminder.utils.GlobalDialogState
 
 @Composable
 fun GlobalDialog(
-    messageID: Int,
-    error: Boolean = true,
-    imageIconTwoOptions: Int? = null,
-    onDismiss: () -> Unit,
-    onSuccess: (() -> Unit)? = null,
+    dialogState: GlobalDialogState
 ) {
-    Dialog(
-        onDismissRequest = { onDismiss() },
-        content = {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth(.95f)
-                    .height(250.dp)
-                    .background(color = White, shape = MaterialTheme.shapes.medium)
-                    .padding(8.dp),
-                verticalArrangement = Arrangement.SpaceAround,
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                Image(
-                    contentDescription = null,
-                    contentScale = ContentScale.Fit,
-                    painter = painterResource(
-                        imageIconTwoOptions
-                            ?: if (error) R.drawable.icon_error else R.drawable.icon_check
-                    ),
-                    modifier = Modifier
-                        .width(if (imageIconTwoOptions != null) 70.dp else 60.dp)
-                        .height(if (imageIconTwoOptions != null) 70.dp else 60.dp)
+    val icon = when {
+        dialogState.isConfirmation -> Icons.AutoMirrored.Rounded.HelpOutline
+        dialogState.error -> Icons.Rounded.ErrorOutline
+        else -> Icons.Rounded.CheckCircle
+    }
+
+    val iconTint = when {
+        dialogState.isConfirmation -> Primary
+        dialogState.error -> Error
+        else -> Success
+    }
+
+    val defaultTitle = when {
+        dialogState.isConfirmation -> stringResource(R.string.app_name)
+        dialogState.error -> stringResource(R.string.oops)
+        else -> stringResource(R.string.success)
+    }
+
+    AlertDialog(
+        onDismissRequest = dialogState.onDismiss,
+        shape = RoundedCornerShape(24.dp),
+        containerColor = BackgroundDark,
+        icon = {
+            Icon(
+                imageVector = icon,
+                contentDescription = null,
+                tint = iconTint,
+                modifier = Modifier.size(44.dp)
+            )
+        },
+        title = {
+            Text(
+                text = dialogState.title ?: defaultTitle,
+                style = MaterialTheme.typography.titleLarge,
+                color = White,
+                textAlign = TextAlign.Center
+            )
+        },
+        text = {
+            Text(
+                text = stringResource(dialogState.messageID),
+                style = MaterialTheme.typography.bodyLarge,
+                color = White70,
+                textAlign = TextAlign.Center
+            )
+        },
+        confirmButton = {
+            Button(
+                onClick = {
+                    dialogState.onSuccess?.invoke()
+                    dialogState.onDismiss()
+                },
+                shape = RoundedCornerShape(12.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = if (dialogState.error) Error else Primary,
+                    contentColor = White
                 )
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = if (dialogState.isConfirmation) stringResource(R.string.button_confirm)
+                    else stringResource(R.string.ok),
+                    style = MaterialTheme.typography.labelLarge
+                )
+            }
+        },
+        dismissButton = if (dialogState.isConfirmation) {
+            {
+                OutlinedButton(
+                    onClick = dialogState.onDismiss,
+                    shape = RoundedCornerShape(12.dp),
+                    colors = ButtonDefaults.outlinedButtonColors(
+                        contentColor = White70
+                    )
                 ) {
-                    if (imageIconTwoOptions === null)
-                        Text(
-                            color = if (error) Error else Success,
-                            textAlign = TextAlign.Center,
-                            style = MaterialTheme.typography.body2,
-                            text = if (error) stringResource(R.string.oops) else stringResource(R.string.success),
-                        )
                     Text(
-                        textAlign = TextAlign.Center,
-                        style = if (imageIconTwoOptions != null)
-                            MaterialTheme.typography.body2
-                        else MaterialTheme.typography.body1,
-                        text = stringResource(id = messageID),
-                        modifier = Modifier.padding(vertical = 3.dp),
-                        color = if (imageIconTwoOptions != null) Black else BlackOpacity,
+                        text = stringResource(R.string.button_cancel),
+                        style = MaterialTheme.typography.labelLarge
                     )
                 }
-                if (imageIconTwoOptions != null)
-                    TwoOptionButton(onSuccess!!, onDismiss)
-                else
-                    OneOptionButton(onDismiss, error)
             }
-        }
+        } else null
     )
-}
-
-@Composable
-fun OneOptionButton(onDismiss: () -> Unit, error: Boolean) {
-    Button(
-        onClick = { onDismiss() },
-        shape = MaterialTheme.shapes.large,
-        modifier = Modifier.fillMaxWidth(.5f),
-        colors = ButtonDefaults.buttonColors(backgroundColor = if (error) Error else Success),
-    ) {
-        Text(
-            color = White,
-            text = stringResource(R.string.ok),
-            style = MaterialTheme.typography.button,
-        )
-    }
-}
-
-@Composable
-fun TwoOptionButton(onSuccess: () -> Unit, onDismiss: () -> Unit) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceAround,
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Button(
-            onClick = { onDismiss() },
-            shape = MaterialTheme.shapes.large,
-            modifier = Modifier.fillMaxWidth(.45f),
-            border = BorderStroke(2.dp, BlueInfo),
-            colors = ButtonDefaults.outlinedButtonColors(backgroundColor = White)
-        ) {
-            Text(
-                color = BlueInfo,
-                style = MaterialTheme.typography.button,
-                text = stringResource(R.string.button_cancel),
-            )
-        }
-        Button(
-            onClick = { onSuccess() },
-            shape = MaterialTheme.shapes.large,
-            modifier = Modifier.fillMaxWidth(.81f),
-            colors = ButtonDefaults.outlinedButtonColors(backgroundColor = BlueInfo)
-        ) {
-            Text(
-                color = White,
-                style = MaterialTheme.typography.button,
-                text = stringResource(R.string.button_confirm),
-            )
-        }
-    }
 }

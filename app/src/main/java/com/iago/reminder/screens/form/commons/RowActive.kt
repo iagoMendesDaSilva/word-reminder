@@ -4,11 +4,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.rounded.Notifications
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
@@ -20,29 +20,33 @@ import com.iago.reminder.helpers.SwitchDefault
 import com.iago.reminder.ui.theme.White
 
 @Composable
-fun RowActive(remind: MutableState<Boolean>) {
+fun RowActive(
+    remind: MutableState<Boolean>,
+    modifier: Modifier = Modifier
+) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
-            .padding(bottom = 10.dp, top = 15.dp),
+            .padding(bottom = 12.dp, top = 14.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically,
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        Row() {
+        Row(verticalAlignment = Alignment.CenterVertically) {
             Icon(
-                modifier = Modifier.padding(end = 5.dp),
-                tint = White,
-                imageVector = Icons.Default.Notifications,
+                imageVector = Icons.Rounded.Notifications,
                 contentDescription = null,
+                tint = White,
+                modifier = Modifier.padding(end = 8.dp)
             )
             Text(
                 text = stringResource(R.string.reminde_me),
-                color = White,
-                style = MaterialTheme.typography.body1
+                style = MaterialTheme.typography.bodyLarge,
+                color = White
             )
         }
-        SwitchDefault(remind.value) {
-            remind.value = it
+
+        SwitchDefault(initialValue = remind.value) { checked ->
+            remind.value = checked
         }
     }
 }

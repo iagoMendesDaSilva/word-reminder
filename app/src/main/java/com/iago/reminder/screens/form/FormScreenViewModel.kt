@@ -4,23 +4,28 @@ import android.content.Context
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.iago.reminder.R
+import com.iago.reminder.ReminderApplication
 import com.iago.reminder.models.Word
 import com.iago.reminder.repository.ReminderRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class FormScreenViewModel @Inject constructor(
-    private val reminderRepository: ReminderRepository
+class FormScreenViewModel(
+    private val reminderRepository: ReminderRepository = ReminderApplication.instance.repository
 ) : ViewModel() {
 
     var loading = mutableStateOf(false)
     var error = mutableStateOf<Int?>(null)
+    var wordLoaded = mutableStateOf<Word?>(null)
 
-    private fun startAction() {
-        loading.value = true
-        error.value = null
+    fun loadWord(id: Int) {
+        viewModelScope.launch {
+            try {
+                wordLoaded.value = reminderRepository.getWord(id)
+            } catch (_: Exception) {
+                error.value = R.string.error_default
+            }
+        }
     }
 
     fun saveWord(
@@ -33,19 +38,28 @@ class FormScreenViewModel @Inject constructor(
         callback: () -> Unit
     ) {
         viewModelScope.launch {
-            startAction()
+            loading.value = true
+            error.value = null
+            try {
+                val wordItem = Word(
+                    id = 0,
+                    time = time,
+                    word = word.trim(),
+                    word_translate = wordTranslate.trim(),
+                    active = active
+                )
+                val newId = reminderRepository.addWord(wordItem)
+                wordItem.id = newId.toInt()
 
-            var list = reminderRepository.getWords()
-            var nextID = if (list.isEmpty()) 1 else list[list.lastIndex].id + 1
-
-            var wordItem = Word(nextID, time, word, wordTranslate, active)
-            reminderRepository.addWord(wordItem)
-
-            if (active)
-                createAlarm(wordItem, context)
-
-            loading.value = false
-            callback()
+                if (active) {
+                    createAlarm(wordItem, context)
+                }
+                callback()
+            } catch (_: Exception) {
+                error.value = R.string.error_default
+            } finally {
+                loading.value = false
+            }
         }
     }
 
@@ -61,17 +75,28 @@ class FormScreenViewModel @Inject constructor(
         callback: () -> Unit
     ) {
         viewModelScope.launch {
-            startAction()
-            var wordItem = Word(id, time, word, wordTranslate, active)
-            reminderRepository.editWord(wordItem)
+            loading.value = true
+            error.value = null
+            try {
+                val wordItem = Word(
+                    id = id,
+                    time = time,
+                    word = word.trim(),
+                    word_translate = wordTranslate.trim(),
+                    active = active
+                )
+                reminderRepository.editWord(wordItem)
 
-            cancelAlarm(wordItem, context)
-            if (active)
-                createAlarm(wordItem, context)
-
-            loading.value = false
-            callback()
+                cancelAlarm(wordItem, context)
+                if (active) {
+                    createAlarm(wordItem, context)
+                }
+                callback()
+            } catch (_: Exception) {
+                error.value = R.string.error_default
+            } finally {
+                loading.value = false
+            }
         }
     }
-
 }

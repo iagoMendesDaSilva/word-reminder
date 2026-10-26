@@ -1,7 +1,5 @@
 package com.iago.reminder.navigation
 
-import java.lang.IllegalArgumentException
-
 enum class Screens {
     HomeScreen,
     PracticeScreen,
@@ -13,8 +11,7 @@ enum class Screens {
             FormScreen.name -> FormScreen
             PracticeScreen.name -> PracticeScreen
             null -> HomeScreen
-            else -> throw  IllegalArgumentException("Route $route is not recognized")
+            else -> HomeScreen
         }
     }
-
 }

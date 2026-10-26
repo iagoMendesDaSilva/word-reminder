@@ -1,15 +1,24 @@
 package com.iago.reminder.helpers
 
-import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.iago.reminder.ui.theme.White
+import com.iago.reminder.ui.theme.Primary
 
 @Composable
-fun Load(strokeWidth: Dp = 2.dp) {
+fun Load(
+    modifier: Modifier = Modifier,
+    size: Dp = 40.dp,
+    strokeWidth: Dp = 3.dp,
+    color: Color = Primary
+) {
     CircularProgressIndicator(
-        color = White,
-        strokeWidth = strokeWidth,
+        modifier = modifier.size(size),
+        color = color,
+        strokeWidth = strokeWidth
     )
 }
