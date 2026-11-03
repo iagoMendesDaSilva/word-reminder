@@ -1,0 +1,6 @@
+package com.lighthouse.wordreminder.utils
+
+object Constants {
+    const val CHANNEL_ID = "REMINDER_ID"
+    const val CHANNEL_NAME = "Word Reminder"
+}

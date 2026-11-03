@@ -54,6 +54,7 @@
     <string name="support_tier_snack">Buy a Snack</string>
     <string name="support_tier_lunch">Buy a Lunch</string>
     <string name="support_thank_you">Thank you for supporting Word Reminder!</string>
+    <string name="billing_unavailable">Google Play payment service unavailable. Please check again later.</string>
     <string name="version_format">Version %1$s</string>
     <string name="about_description">Daily vocabulary practice made simple.</string>
 </resources>

@@ -13,8 +13,10 @@ room = "2.7.0"
 navigationCompose = "2.8.8"
 gson = "2.12.1"
 coilCompose = "2.7.0"
+playBilling = "9.1.0"
 
 [libraries]
+billing-ktx = { group = "com.android.billingclient", name = "billing-ktx", version.ref = "playBilling" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
