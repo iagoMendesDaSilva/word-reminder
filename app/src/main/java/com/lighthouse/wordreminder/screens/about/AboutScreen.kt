@@ -187,7 +187,7 @@ fun AboutScreen(
 
         // App Icon Centered (0.5f width, without box/background)
         Image(
-            painter = painterResource(R.drawable.logo_playstore),
+            painter = painterResource(R.drawable.logo),
             contentDescription = stringResource(R.string.logo_desc),
             contentScale = ContentScale.Fit,
             modifier = Modifier.fillMaxWidth(0.5f)
