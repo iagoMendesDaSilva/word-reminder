@@ -6,9 +6,13 @@ Word Reminder is an Android application designed to help you memorize new vocabu
   <img src="demonstration/mockups.png" alt="Word Reminder Mockups" width="100%" />
 </p>
 
-<p align="center">
+<p align="left">
   <a href="https://play.google.com/store/apps/details?id=com.lighthouse.wordreminder">
-    <img src="demonstration/playstore.png" alt="Disponível no Google Play" height="64" />
+    <img src="demonstration/playstore.png" alt="Google Play" height="40" style="vertical-align: middle;" />
+  </a>
+  &nbsp;&nbsp;
+  <a href="https://play.google.com/store/apps/details?id=com.lighthouse.wordreminder" style="text-decoration: none; font-size: 16px; font-weight: 600; vertical-align: middle;">
+    Baixe na Google Play Store
   </a>
 </p>
 
