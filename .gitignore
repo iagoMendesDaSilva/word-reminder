@@ -17,3 +17,6 @@ keystore.properties
 .cxx
 local.properties
 .kotlin
+*.apk
+*.aab
+/app/release
