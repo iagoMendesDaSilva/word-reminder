@@ -17,8 +17,8 @@ android {
         applicationId = "com.lighthouse.wordreminder"
         minSdk = 24
         targetSdk = 37
-        versionCode = 3
-        versionName = "1.0.2"
+        versionCode = 4
+        versionName = "1.0.3"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -40,10 +40,7 @@ android {
     buildTypes {
         release {
             signingConfig = signingConfigs.getByName("release")
-            optimization {
-                enable = true
-                packageScope = setOf("androidx.**", "kotlin.**", "kotlinx.**")
-            }
+            isMinifyEnabled = false
         }
     }
     compileOptions {
