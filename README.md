@@ -1,9 +1,37 @@
 # Word Reminder
 
-Word Reminder is an application that helps memorize new vocabulary by sending notifications. Also you can practice the vocabulary in the application practice tab.
+Word Reminder is an Android application designed to help you memorize new vocabulary effortlessly through scheduled daily notifications, text-to-speech pronunciation, and interactive practice quizzes.
 
+<p align="center">
+  <img src="demonstration/mockups.png" alt="Word Reminder Mockups" width="100%" />
+</p>
 
-<img src="/demonstration/mockup.png"/><br>
-<a href="https://play.google.com/store/apps/details?id=com.lighthouse.wordreminder"><img src="https://camo.githubusercontent.com/2149f526e69167218eb7eea8f21cb74a756aa43495f7acfeccfe995d40f62028/68747470733a2f2f706c61792e676f6f676c652e636f6d2f696e746c2f656e5f75732f6261646765732f696d616765732f67656e657269632f656e5f62616467655f7765625f67656e657269632e706e67" alt="Download from Google Play" height="80" data-canonical-src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" style="max-width: 100%;"></a><br>
+<p align="center">
+  <a href="https://play.google.com/store/apps/details?id=com.lighthouse.wordreminder">
+    <img src="demonstration/playstore.png" alt="Get it on Google Play" height="60" />
+  </a>
+</p>
 
+---
 
+## ✨ Features
+
+- 🔔 **Scheduled Reminders:** Set custom notification times for each vocabulary word to reinforce retention.
+- 🔊 **Audio Pronunciation:** High-quality Text-to-Speech (TTS) to listen to native pronunciation with a single tap.
+- 🧠 **Practice Mode:** Multiple quiz formats (word-to-translation, translation-to-word, and listening quizzes).
+- 💾 **Backup & Restore:** Easily export and import your words list via JSON.
+- 🎨 **Modern Material 3 Design:** Clean, distraction-free interface built with Jetpack Compose.
+- 🛡️ **100% Free & Privacy-Friendly:** Completely offline and ad-free; your data never leaves your device.
+
+---
+
+## 🛠️ Built With
+
+- **Language:** Kotlin
+- **UI Framework:** Jetpack Compose (Material 3)
+- **Architecture:** MVVM + Clean principles
+- **Local Database:** Room Database with KSP
+- **Monetization / In-App:** Google Play Billing Library 9
+- **Asynchronous:** Kotlin Coroutines & StateFlow
+- **Minimum SDK:** 24 (Android 7.0)
+- **Target SDK:** 37 (Android 17)
