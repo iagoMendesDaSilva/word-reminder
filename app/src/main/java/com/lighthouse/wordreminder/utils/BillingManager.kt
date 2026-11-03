@@ -2,6 +2,7 @@ package com.lighthouse.wordreminder.utils
 
 import android.app.Activity
 import android.content.Context
+import android.util.Log
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClientStateListener
 import com.android.billingclient.api.BillingFlowParams
@@ -62,19 +63,21 @@ class BillingManager(
     private fun startConnection() {
         billingClient.startConnection(object : BillingClientStateListener {
             override fun onBillingSetupFinished(billingResult: BillingResult) {
+                Log.d("BillingManager", "onBillingSetupFinished: code=${billingResult.responseCode}, msg=${billingResult.debugMessage}")
                 if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
                     queryProducts()
                 }
             }
 
             override fun onBillingServiceDisconnected() {
-                // Connection will be retried on next query or user action
+                Log.w("BillingManager", "onBillingServiceDisconnected")
             }
         })
     }
 
     fun queryProducts() {
         if (!billingClient.isReady) {
+            Log.d("BillingManager", "queryProducts: billingClient not ready, reconnecting...")
             startConnection()
             return
         }
@@ -91,6 +94,8 @@ class BillingManager(
             .build()
 
         billingClient.queryProductDetailsAsync(queryProductDetailsParams) { billingResult, queryProductDetailsResult ->
+            val count = queryProductDetailsResult.productDetailsList.size
+            Log.d("BillingManager", "queryProductDetails: code=${billingResult.responseCode}, msg=${billingResult.debugMessage}, count=$count")
             if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
                 val productMap = queryProductDetailsResult.productDetailsList.associateBy { it.productId }
                 _products.value = productMap
@@ -104,6 +109,7 @@ class BillingManager(
         onError: () -> Unit = {}
     ) {
         val productDetails = _products.value[productId]
+        Log.d("BillingManager", "launchBillingFlow: productId=$productId, hasDetails=${productDetails != null}, isReady=${billingClient.isReady}")
         if (productDetails == null || !billingClient.isReady) {
             onError()
             return
