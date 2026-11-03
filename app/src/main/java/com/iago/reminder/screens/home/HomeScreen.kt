@@ -89,6 +89,7 @@ fun HomeScreen(
             activeCount = words.count { it.active },
             import = { importLauncher.launch("application/json") },
             export = { viewModel.exportWords(context, words) },
+            onAboutClick = { navController.navigate(com.iago.reminder.navigation.Screens.AboutScreen.name) },
             openGlobalDialog = openGlobalDialog
         )
 

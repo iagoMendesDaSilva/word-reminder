@@ -3,7 +3,6 @@ package com.iago.reminder.helpers
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.HelpOutline
 import androidx.compose.material.icons.rounded.CheckCircle
 import androidx.compose.material.icons.rounded.ErrorOutline
 import androidx.compose.material3.AlertDialog
@@ -27,17 +26,19 @@ import com.iago.reminder.ui.theme.White
 import com.iago.reminder.ui.theme.White70
 import com.iago.reminder.utils.GlobalDialogState
 
+import androidx.compose.material.icons.rounded.WarningAmber
+
 @Composable
 fun GlobalDialog(
     dialogState: GlobalDialogState
 ) {
-    val icon = when {
-        dialogState.isConfirmation -> Icons.AutoMirrored.Rounded.HelpOutline
+    val icon = dialogState.icon ?: when {
+        dialogState.isConfirmation -> Icons.Rounded.WarningAmber
         dialogState.error -> Icons.Rounded.ErrorOutline
         else -> Icons.Rounded.CheckCircle
     }
 
-    val iconTint = when {
+    val iconTint = dialogState.iconTint ?: when {
         dialogState.isConfirmation -> Primary
         dialogState.error -> Error
         else -> Success
@@ -85,7 +86,7 @@ fun GlobalDialog(
                 },
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = if (dialogState.error) Error else Primary,
+                    containerColor = if (dialogState.error || (dialogState.iconTint == Error)) Error else Primary,
                     contentColor = White
                 )
             ) {

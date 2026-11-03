@@ -10,10 +10,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Delete
 import com.iago.reminder.R
 import com.iago.reminder.models.Word
 import com.iago.reminder.navigation.Screens
 import com.iago.reminder.screens.home.HomeScreenViewModel
+import com.iago.reminder.ui.theme.Error
 import com.iago.reminder.utils.GlobalDialogState
 
 @Composable
@@ -29,12 +32,7 @@ fun ListWords(
     modifier: Modifier = Modifier
 ) {
     if (data.isEmpty() && search.isEmpty()) {
-        EmptyList(
-            onAddWordClick = {
-                navController.navigate(Screens.FormScreen.name)
-            },
-            modifier = modifier
-        )
+        EmptyList(modifier = modifier)
     } else if (search.isNotEmpty() && data.isEmpty()) {
         NoResults(modifier = modifier)
     } else {
@@ -61,6 +59,8 @@ fun ListWords(
                             GlobalDialogState(
                                 messageID = R.string.exclude_word,
                                 isConfirmation = true,
+                                icon = Icons.Rounded.Delete,
+                                iconTint = Error,
                                 onSuccess = {
                                     viewModel.deleteWord(context, word, cancelAlarm)
                                 }

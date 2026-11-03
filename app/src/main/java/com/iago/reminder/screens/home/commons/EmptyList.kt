@@ -15,14 +15,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.iago.reminder.R
-import com.iago.reminder.helpers.ButtonDefault
 import com.iago.reminder.helpers.MeditationImage
 import com.iago.reminder.ui.theme.White
 import com.iago.reminder.ui.theme.White70
 
 @Composable
 fun EmptyList(
-    onAddWordClick: (() -> Unit)? = null,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -47,13 +45,5 @@ fun EmptyList(
             color = White70,
             textAlign = TextAlign.Center
         )
-        if (onAddWordClick != null) {
-            Spacer(modifier = Modifier.height(24.dp))
-            ButtonDefault(
-                text = stringResource(R.string.new_word),
-                onClick = onAddWordClick,
-                modifier = Modifier.padding(horizontal = 32.dp)
-            )
-        }
     }
 }

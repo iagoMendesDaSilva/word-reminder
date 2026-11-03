@@ -70,14 +70,14 @@ class AlarmReceiver : BroadcastReceiver() {
             val builder = NotificationCompat.Builder(context, CHANNEL_ID)
                 .setContentIntent(pendingIntent)
                 .setSmallIcon(R.drawable.logo_notification)
-                .setContentTitle("Word Reminder: $word")
-                .setContentText("What does \"$word\" mean? Tap to reveal!")
+                .setContentTitle(word)
+                .setContentText(translate)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setAutoCancel(true)
                 .setStyle(
                     NotificationCompat.BigTextStyle()
-                        .setBigContentTitle("Word Reminder: $word")
-                        .bigText("Word: $word\nTranslation: $translate\n\nTap to open Word Reminder and practice!")
+                        .setBigContentTitle(word)
+                        .bigText("$word - $translate")
                 )
 
             val notificationManager = NotificationManagerCompat.from(context)

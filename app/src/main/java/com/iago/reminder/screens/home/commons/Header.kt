@@ -1,6 +1,7 @@
 package com.iago.reminder.screens.home.commons
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -12,13 +13,22 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.FileDownload
 import androidx.compose.material.icons.rounded.FileUpload
+import androidx.compose.material.icons.rounded.Info
+import androidx.compose.material.icons.rounded.Settings
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FilledTonalIconButton
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -35,9 +45,12 @@ fun Header(
     activeCount: Int,
     import: () -> Unit,
     export: () -> Unit,
+    onAboutClick: () -> Unit,
     openGlobalDialog: (dialog: GlobalDialogState) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    var menuExpanded by remember { mutableStateOf(false) }
+
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -83,21 +96,9 @@ fun Header(
             }
         }
 
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            // Export button
+        Box {
             FilledTonalIconButton(
-                onClick = {
-                    openGlobalDialog(
-                        GlobalDialogState(
-                            messageID = R.string.exportWords,
-                            isConfirmation = true,
-                            onSuccess = { export() }
-                        )
-                    )
-                },
+                onClick = { menuExpanded = true },
                 modifier = Modifier.size(42.dp),
                 colors = IconButtonDefaults.filledTonalIconButtonColors(
                     containerColor = BackgroundDark,
@@ -105,33 +106,103 @@ fun Header(
                 )
             ) {
                 Icon(
-                    imageVector = Icons.Rounded.FileUpload,
-                    contentDescription = "Export words",
+                    imageVector = Icons.Rounded.Settings,
+                    contentDescription = stringResource(R.string.settings),
                     modifier = Modifier.size(22.dp)
                 )
             }
 
-            // Import button
-            FilledTonalIconButton(
-                onClick = {
-                    openGlobalDialog(
-                        GlobalDialogState(
-                            messageID = R.string.importWords,
-                            isConfirmation = true,
-                            onSuccess = { import() }
-                        )
-                    )
-                },
-                modifier = Modifier.size(42.dp),
-                colors = IconButtonDefaults.filledTonalIconButtonColors(
-                    containerColor = BackgroundDark,
-                    contentColor = White
-                )
+            DropdownMenu(
+                expanded = menuExpanded,
+                onDismissRequest = { menuExpanded = false },
+                shape = RoundedCornerShape(16.dp),
+                containerColor = BackgroundDark
             ) {
-                Icon(
-                    imageVector = Icons.Rounded.FileDownload,
-                    contentDescription = "Import words",
-                    modifier = Modifier.size(22.dp)
+                DropdownMenuItem(
+                    text = {
+                        Text(
+                            text = stringResource(R.string.import_title),
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = White
+                        )
+                    },
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Rounded.FileDownload,
+                            contentDescription = null,
+                            tint = Primary,
+                            modifier = Modifier.size(20.dp)
+                        )
+                    },
+                    onClick = {
+                        menuExpanded = false
+                        openGlobalDialog(
+                            GlobalDialogState(
+                                messageID = R.string.importWords,
+                                isConfirmation = true,
+                                icon = Icons.Rounded.FileDownload,
+                                iconTint = Primary,
+                                onSuccess = { import() }
+                            )
+                        )
+                    }
+                )
+
+                DropdownMenuItem(
+                    text = {
+                        Text(
+                            text = stringResource(R.string.export_title),
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = White
+                        )
+                    },
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Rounded.FileUpload,
+                            contentDescription = null,
+                            tint = Primary,
+                            modifier = Modifier.size(20.dp)
+                        )
+                    },
+                    onClick = {
+                        menuExpanded = false
+                        openGlobalDialog(
+                            GlobalDialogState(
+                                messageID = R.string.exportWords,
+                                isConfirmation = true,
+                                icon = Icons.Rounded.FileUpload,
+                                iconTint = Primary,
+                                onSuccess = { export() }
+                            )
+                        )
+                    }
+                )
+
+                HorizontalDivider(
+                    color = White.copy(alpha = 0.12f),
+                    modifier = Modifier.padding(vertical = 4.dp)
+                )
+
+                DropdownMenuItem(
+                    text = {
+                        Text(
+                            text = stringResource(R.string.about),
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = White
+                        )
+                    },
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Rounded.Info,
+                            contentDescription = null,
+                            tint = Primary,
+                            modifier = Modifier.size(20.dp)
+                        )
+                    },
+                    onClick = {
+                        menuExpanded = false
+                        onAboutClick()
+                    }
                 )
             }
         }

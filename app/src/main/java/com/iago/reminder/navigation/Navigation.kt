@@ -70,5 +70,12 @@ fun Navigation(
                 openGlobalDialog = openGlobalDialog
             )
         }
+
+        composable(Screens.AboutScreen.name) {
+            com.iago.reminder.screens.about.AboutScreen(
+                navController = navController,
+                openGlobalDialog = openGlobalDialog
+            )
+        }
     }
 }
