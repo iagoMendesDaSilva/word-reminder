@@ -14,7 +14,7 @@ fun Logo(
     modifier: Modifier = Modifier
 ) {
     Image(
-        painter = painterResource(R.drawable.logo),
+        painter = painterResource(R.drawable.logo_playstore),
         contentDescription = stringResource(R.string.logo_desc),
         contentScale = ContentScale.Fit,
         modifier = modifier.fillMaxWidth(0.6f)
